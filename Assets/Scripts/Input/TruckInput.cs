@@ -7,13 +7,13 @@ namespace Daadab
     {
         [SerializeField] private InputReader inputReader;
 
-        private LaneSwitcher laneSwitcher;
+        private Truck laneSwitcher;
 
         private void Awake()
         {
             Assert.IsNotNull(inputReader);
 
-            laneSwitcher = GetComponent<LaneSwitcher>();
+            laneSwitcher = GetComponent<Truck>();
             Assert.IsNotNull(laneSwitcher);
         }
 

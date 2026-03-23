@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Daadab
 {
-    public class LaneSwitcher : MonoBehaviour
+    public class Truck : MonoBehaviour, IUnitComponent
     {
         [Header("Movement")]
         [SerializeField] private float xSpeed;
@@ -45,14 +45,8 @@ namespace Daadab
 
         private void ApplyMovement()
         {
-            // if (!isMoving) return;
-
             targetX = (int)lane * xMoveAmount;
-            // xPosition = Mathf.MoveTowards(
-            //     current:  myTransform.position.x,
-            //     target: targetX,
-            //     maxDelta: xSpeed * Time.fixedDeltaTime
-            // );
+            
             xPosition = Mathf.SmoothDamp(
                 current: myTransform.position.x,
                 target: targetX,
@@ -64,12 +58,6 @@ namespace Daadab
                 target: myTransform.position.z + 1,
                 maxDelta: zSpeed * Time.fixedDeltaTime
             );
-            // xPosition = Mathf.Lerp(
-            //     a:  myTransform.position.x,
-            //     b: targetX,
-            //     t: xSpeed * Time.fixedDeltaTime
-            // );
-            // xPosition = Mathf.Lerp(a: xPosition, b: targetX, t: xSpeed * Time.fixedDeltaTime);
 
             isMovingToSide = Mathf.Abs(targetX - myTransform.position.x) > 0.1f;
 
@@ -79,7 +67,6 @@ namespace Daadab
         private void GoToPreviousLane()
         {
             direction = (int)previousLane - (int)lane;
-            // Debug.Log(direction.x);
             SwitchLane(direction);
         }
 
@@ -97,12 +84,10 @@ namespace Daadab
                 if (lane == Lane.Mid)
                 {
                     lane = Lane.Left;
-                    // Debug.Log("Move from MID to LEFT");
                 }
                 else if (lane == Lane.Right)
                 {
                     lane = Lane.Mid;
-                    // Debug.Log("Move from RIGHT to MIX");
                 }
             }
             else if (direction > 0)
@@ -110,12 +95,10 @@ namespace Daadab
                 if (lane == Lane.Mid)
                 {
                     lane = Lane.Right;
-                    // Debug.Log("Move from MID to RIGHT");
                 }
                 else if (lane == Lane.Left)
                 {
                     lane = Lane.Mid;
-                    // Debug.Log("Move from LEFT to MIX");
                 }
             }
         }
@@ -131,6 +114,20 @@ namespace Daadab
         private void StopMoving()
         {
             velocity = Vector2.zero;
+        }
+
+        public void EnterActiveState()
+        {
+            enabled = true;
+        }
+
+        public void ExitActiveState()
+        {
+            enabled = false;
+        }
+
+        public void ResetMe()
+        {
         }
     }
 }

@@ -11,8 +11,15 @@ namespace Daadab
     {
         [SerializeField] private Transform worldStart;
         [SerializeField] private Transform worldEnd;
-        [SerializeField] private Transform objectHolder;
         [SerializeField] private Transform playerTransform;
+
+        [Header("Sections")]
+        /// <summary>
+        /// What distance has been covered along the z-axis by spawning sections?
+        /// </summary>
+        [SerializeField] private float spawnedDistance;
+        [SerializeField] private int sectionSpawnCounter;
+        [SerializeField] private Transform sectionHolder;
         [SerializeField] private Section sectionTemplate;
         /// <summary>
         /// How many sections need to be instantiated
@@ -24,6 +31,11 @@ namespace Daadab
         /// if  sectionCreateDistanceNormalised is greater than 0.8f activate next section
         /// </summary>
         [SerializeField] [Range(0,1)] private float sectionCreateDistanceNormalised = 0.8f;
+        /// <summary>
+        /// The most recently spawned section
+        /// </summary>
+        [SerializeField] private Section lastSection;
+        [SerializeField] private List<Section> sections = new();
 
         [Header("Runtime Only")]
         [SerializeField] private bool initialised;
@@ -31,16 +43,6 @@ namespace Daadab
         [SerializeField] private float playerDistToWorldEnd;
         [SerializeField] [Range(0,1)] private float playerDistToWorldEndNormalised;
         
-        /// <summary>
-        /// What distance has been covered along the z-axis by spawning sections?
-        /// </summary>
-        [SerializeField] private float spawnedDistance;
-        [SerializeField] private int sectionSpawnCounter;
-        /// <summary>
-        /// The most recently spawned section
-        /// </summary>
-        [SerializeField] private Section lastSection;
-        [SerializeField] private List<Section> sections = new();
 
         private int sectionIndex;
 
@@ -49,13 +51,13 @@ namespace Daadab
             Assert.IsNotNull(worldStart);
             Assert.IsNotNull(worldEnd);
             Assert.IsNotNull(sectionTemplate);
-            Assert.IsNotNull(objectHolder);
+            Assert.IsNotNull(sectionHolder);
             Assert.IsNotNull(playerTransform);
 
             for (int i = 0; i < sectionAmount; i++)
             {
-                var obj = Instantiate(sectionTemplate, objectHolder);
-                obj.name = $"Section {i}";
+                var obj = Instantiate(sectionTemplate, sectionHolder);
+                obj.name = $"Section {i + 1}";
                 obj.gameObject.SetActive(false);
 
                 sections.Add(obj);

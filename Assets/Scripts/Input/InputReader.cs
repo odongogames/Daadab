@@ -29,9 +29,20 @@ namespace Daadab
             }
         }
 
+        private void OnDestroy()
+        {
+            if (inputActions != null)
+            {
+                inputActions.Disable();
+            }
+        }
+
         private void OnDisable()
         {
-            inputActions.Disable();
+            if (inputActions != null)
+            {
+                inputActions.Disable();
+            }
         }
     }
 }
