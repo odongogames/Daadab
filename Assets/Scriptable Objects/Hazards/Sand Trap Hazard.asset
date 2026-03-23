@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff9a8dc49e81ce341b5648366576c7ba, type: 3}
-  m_Name: Rock Hazard
-  m_EditorClassIdentifier: Assembly-CSharp::Daadab.RockHazard
+  m_Script: {fileID: 11500000, guid: 707ecfa91c8208d43a8cb0be71bdd57c, type: 3}
+  m_Name: Sand Trap Hazard
+  m_EditorClassIdentifier: Assembly-CSharp::Daadab.SandTrapHazard
   me: {fileID: 11400000}
   cancellers: []
-  lifeTime: 1
+  lifeTime: 0

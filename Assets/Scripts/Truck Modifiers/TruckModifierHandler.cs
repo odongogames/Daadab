@@ -60,6 +60,14 @@ namespace Daadab
             }
         }
 
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.TryGetComponent(out TruckModifier modifier))
+            {
+                modifier.GetModifier().ExitTrigger(truck);
+            }
+        }
+
         private void Update()
         {
             for (int i = activeModifiers.Count - 1; i > -1; i--)

@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff9a8dc49e81ce341b5648366576c7ba, type: 3}
-  m_Name: Rock Hazard
-  m_EditorClassIdentifier: Assembly-CSharp::Daadab.RockHazard
+  m_Script: {fileID: 11500000, guid: ba3b014c55b56cf46a4e8a2e620955b9, type: 3}
+  m_Name: Water Pickup Unit
+  m_EditorClassIdentifier: Assembly-CSharp::Daadab.UnitVariable
   me: {fileID: 11400000}
-  cancellers: []
-  lifeTime: 1
+  unit: {fileID: 986088951271933679, guid: e8611790a3f522b42a8d323a1f4b6022, type: 3}

@@ -9,11 +9,10 @@ namespace Daadab
     {
         [SerializeField] private UnitData data;
 
-        // [Header("Runtime only")]
-        [SerializeField] private List<IUnitComponent> unitComponents = new List<IUnitComponent>();
+        private List<IUnitComponent> unitComponents = new List<IUnitComponent>();
 
-        // private Dictionary<Type, Component> cachedComponents = new Dictionary<Type, Component>();
-
+        // TODO: Only save data that is needed.
+        // Consider changing it to ModifierData and moving it to teh truck modifier class
         public UnitData GetUnitData() => data;
 
         private Transform originalParent;
@@ -32,16 +31,21 @@ namespace Daadab
         [ContextMenu("Save Unit Data")]
         public void SaveUnitData()
         {
-            data.position = transform.localPosition;
-            data.rotation = transform.rotation;
-            data.scale = transform.localScale;
+            data.Position = transform.localPosition;
+            data.Rotation = transform.rotation;
+            data.Scale = transform.localScale;
+        }
+
+        public void SetUnitData(UnitData newData)
+        {
+            data = newData;
         }
 
         public void ApplyUnitData()
         {
-            transform.localPosition = data.position;
-            transform.rotation = data.rotation;
-            transform.localScale = data.scale;
+            transform.localPosition = data.Position;
+            transform.rotation = data.Rotation;
+            transform.localScale = data.Scale;
         }
 
         public virtual void ResetMe()

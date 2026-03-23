@@ -23,6 +23,11 @@ namespace Daadab
             Debug.Log($"{name} finish modifying truck");
         }
 
+        public virtual void ExitTrigger(Truck truck)
+        {
+            // Debug.Log($"{name} on trigger exit");
+        }
+
         public bool IsCancelledBy(AbstractTruckModifier modifier)
         {
             return cancellers.Contains(modifier);

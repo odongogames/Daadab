@@ -37,6 +37,9 @@ namespace Daadab
         [SerializeField] private Section lastSection;
         [SerializeField] private List<Section> sections = new();
 
+        [Header("Unit Sequences")]
+        [SerializeField] private List<UnitSequence> unitSequences = new();
+
         [Header("Runtime Only")]
         [SerializeField] private bool initialised;
         [SerializeField] private float worldLength;
@@ -45,6 +48,7 @@ namespace Daadab
         
 
         private int sectionIndex;
+        private int unitSequenceIndex;
 
         private void Awake()
         {
@@ -63,6 +67,7 @@ namespace Daadab
                 sections.Add(obj);
             }
 
+            Assert.IsTrue(unitSequences.Count > 0);
             Assert.IsTrue(worldEnd.position.z > worldStart.position.z);
             Assert.IsTrue(sectionCreateDistanceNormalised > 0);
 
@@ -124,6 +129,14 @@ namespace Daadab
 
             lastSection = section;
             section.gameObject.SetActive(true);
+
+            if (sectionSpawnCounter > 1)
+            {
+                section.SetUnitSequence(unitSequences[unitSequenceIndex]);
+                unitSequenceIndex++;
+                if (unitSequenceIndex >= unitSequences.Count)
+                    unitSequenceIndex = 0;
+            }
 
             sectionSpawnCounter++;
             sectionIndex++;

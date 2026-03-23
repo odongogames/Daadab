@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: Speed Boost Pickup
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.SpeedBoostPickup
   me: {fileID: 11400000}
-  cancellers:
-  - {fileID: 11400000, guid: 7c7530d6c02aabd4093a7315e66fa45b, type: 2}
+  cancellers: []
   lifeTime: 5

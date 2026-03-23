@@ -14,8 +14,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1539696230298173179, guid: e4d10ec4ed488f84189c9f1d4b329448, type: 3}
       propertyPath: m_Name
-      value: Water Pickup Variant
+      value: Water Pickup
       objectReference: {fileID: 0}
+    - target: {fileID: 3864318500379206400, guid: e4d10ec4ed488f84189c9f1d4b329448, type: 3}
+      propertyPath: data.UnitVariable
+      value: 
+      objectReference: {fileID: 11400000, guid: 30c263f0508bc0c4ea68f828e5599c1f, type: 2}
     - target: {fileID: 4148313096358694098, guid: e4d10ec4ed488f84189c9f1d4b329448, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.64151

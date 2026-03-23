@@ -292,8 +292,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1539696230298173179, guid: e4d10ec4ed488f84189c9f1d4b329448, type: 3}
       propertyPath: m_Name
-      value: Health Pickup Variant
+      value: Health Pickup
       objectReference: {fileID: 0}
+    - target: {fileID: 3864318500379206400, guid: e4d10ec4ed488f84189c9f1d4b329448, type: 3}
+      propertyPath: data.UnitVariable
+      value: 
+      objectReference: {fileID: 11400000, guid: f54931f83caf9a74d837585301ea24d7, type: 2}
     - target: {fileID: 4148313096358694098, guid: e4d10ec4ed488f84189c9f1d4b329448, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
