@@ -5,8 +5,7 @@ using UnityEngine.InputSystem;
 
 namespace Daadab
 {
-    [CreateAssetMenu(menuName = "Scriptable Objects/Input Reader")]
-    public class InputReader : MyScriptableObject
+    public class InputReader : MonoBehaviour
     {
         public bool StartMovingLeft() => inputActions.Player.MoveLeft.WasPressedThisFrame();
         public bool MoveLeft() => inputActions.Player.MoveLeft.IsPressed();

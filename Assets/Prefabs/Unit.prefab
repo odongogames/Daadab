@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d82468b10110d7f4eb2313a45585d66f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.Unit
-  activeGameState: 0
+  activeGameState: 1
   data:
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 0}

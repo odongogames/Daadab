@@ -267,7 +267,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2390530321262961605, guid: 01370e56798965c47812858dc3379899, type: 3}
       propertyPath: m_Name
-      value: Truck Variant
+      value: Truck
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -288,6 +288,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2390530321262961605, guid: 01370e56798965c47812858dc3379899, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2428016283326492519}
+    - targetCorrespondingSourceObject: {fileID: 2390530321262961605, guid: 01370e56798965c47812858dc3379899, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2044972276894945106}
   m_SourcePrefab: {fileID: 100100000, guid: 01370e56798965c47812858dc3379899, type: 3}
 --- !u!1 &1531766362626961360 stripped
 GameObject:
@@ -374,6 +377,19 @@ MonoBehaviour:
   lane: 0
   xMoveAmount: 3
   direction: 0
+--- !u!114 &2044972276894945106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531766362626961360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aab66d71d93ac6049ba6c32d4c51015b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHealth: 3
 --- !u!4 &4147305342086422009 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1000647877016179180, guid: 01370e56798965c47812858dc3379899, type: 3}
