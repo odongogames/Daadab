@@ -23,20 +23,21 @@ public class Health : MonoBehaviour, IDamageable
 
     public void TakeDamage()
     {
-        CurrentHealth -= 1;
-
-        if (CurrentHealth > 0)
+        if (CurrentHealth <= 0)
         {
-            OnChangeHealth?.Invoke();
-            Debug.Log($"{name} change health to {CurrentHealth}");
+            Debug.Log($"{name} is already dead.");
+            return;
         }
-        else
+
+        ChangeHealth(-1);
+
+        if (CurrentHealth <= 0)
         {
             Die();
             Debug.Log($"{name} is dead.");
         }
     }
-    
+
     public void Die()
     {
         OnDie?.Invoke();
@@ -45,5 +46,24 @@ public class Health : MonoBehaviour, IDamageable
     public void RestoreHealth()
     {
         CurrentHealth = MaxHealth;
+    }
+
+    public void AddHealth()
+    {
+        if (CurrentHealth <= 0)
+        {
+            Debug.Log($"{name} is already dead.");
+            return;
+        }
+        
+        ChangeHealth(1);
+    }
+
+    private void ChangeHealth(int amount)
+    {
+        CurrentHealth += amount;
+
+        OnChangeHealth?.Invoke();
+        Debug.Log($"{name} change health to {CurrentHealth}");
     }
 }

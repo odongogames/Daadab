@@ -10,6 +10,7 @@ namespace Daadab
         public int Defense { get; set; }
         public void Die();
         public void TakeDamage();
+        public void AddHealth();
         public void RestoreHealth();
     }
 }

@@ -22,6 +22,7 @@ namespace Daadab
         private float gameTime;
 
         public GameState GetCurrentState() => currentGameState;
+        public float GetGameTime() => gameTime;
 
         private void Awake()
         {

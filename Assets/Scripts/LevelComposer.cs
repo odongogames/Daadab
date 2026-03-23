@@ -18,13 +18,13 @@ namespace Daadab
         /// What distance has been covered along the z-axis by spawning sections?
         /// </summary>
         [SerializeField] private float spawnedDistance;
-        [SerializeField] private int sectionSpawnCounter;
+        [SerializeField] private uint sectionSpawnCounter;
         [SerializeField] private Transform sectionHolder;
         [SerializeField] private Section sectionTemplate;
         /// <summary>
         /// How many sections need to be instantiated
         /// </summary>
-        [SerializeField] private int sectionAmount = 5;
+        [SerializeField] private uint sectionAmount = 5;
         /// <summary>
         /// Activate next section when playerDistToWorldEndNormalised is less than this value
         /// Example: When player has covered 20% of world playerDistToWorldEndNormalised is 0.8f
@@ -68,10 +68,7 @@ namespace Daadab
 
             worldLength = worldEnd.position.z - worldStart.position.z;
             Assert.IsTrue(worldLength > 0);
-        }
 
-        private void Start()
-        {
             int counter = 0; 
 
             while (counter < sectionAmount && spawnedDistance < worldLength)

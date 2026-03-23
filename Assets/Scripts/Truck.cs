@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Daadab
 {
     public class Truck : MonoBehaviour, IUnitComponent
     {
+        [SerializeField] private Registry registry;
+
         [Header("Movement")]
         [SerializeField] private float xSpeed;
         [SerializeField] private float zSpeed;
@@ -13,13 +16,9 @@ namespace Daadab
         [SerializeField] private Vector3 velocity;
         [SerializeField] private float moveTimeout = .2f;
         [SerializeField] private Lane lane;
-        /// <summary>
-        /// Distance between each lane on the x-axis
-        /// </summary>
-        [SerializeField] [Range(0, 4)] private int xMoveAmount = 2;
         
         [Header("Runtime only")]
-        [SerializeField][Range(-1, 1)] private int direction;
+        [SerializeField] [Range(-1, 1)] private int direction;
 
         private float targetX;
         private float xPosition;
@@ -36,6 +35,8 @@ namespace Daadab
         private void Awake()
         {
             myTransform = transform;
+
+            Assert.IsNotNull(registry);
         }
 
         private void FixedUpdate()
@@ -45,7 +46,7 @@ namespace Daadab
 
         private void ApplyMovement()
         {
-            targetX = (int)lane * xMoveAmount;
+            targetX = (int)lane * registry.LaneDistance;
             
             xPosition = Mathf.SmoothDamp(
                 current: myTransform.position.x,
