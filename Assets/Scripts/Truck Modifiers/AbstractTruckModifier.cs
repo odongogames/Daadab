@@ -1,9 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Daadab
 {
     public abstract class AbstractTruckModifier : MyScriptableObject
     {
+        [SerializeField] private List<AbstractTruckModifier> cancellers = new();
+
         /// <summary>
         /// How long does this modifier last in seconds?
         /// </summary>
@@ -12,12 +15,17 @@ namespace Daadab
 
         public virtual void ModifyTruck(Truck truck)
         {
-            Debug.Log($"{name} modify truck");
+            // Debug.Log($"{name} modify truck");
         }
 
         public virtual void FinishModifyingTruck(Truck truck)
         {
             Debug.Log($"{name} finish modifying truck");
+        }
+
+        public bool IsCancelledBy(AbstractTruckModifier modifier)
+        {
+            return cancellers.Contains(modifier);
         }
     }
 }

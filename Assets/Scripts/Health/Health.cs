@@ -5,12 +5,12 @@ using UnityEngine.Assertions;
 
 public class Health : MonoBehaviour, IDamageable
 {
-    public int Defense { get; set; }
-    public float CurrentHealth { get; set; }
-    [SerializeField] private float maxHealth = 3;
-    public float MaxHealth { get; set; }
+    public uint Defense { get; set; }
+    public uint CurrentHealth { get; set; }
+    [SerializeField] private uint maxHealth = 3;
+    public uint MaxHealth { get; set; }
 
-    public Action OnChangeHealth;
+    public Action<uint> OnChangeHealth;
     public Action OnDie;
 
     private void Awake()
@@ -61,9 +61,17 @@ public class Health : MonoBehaviour, IDamageable
 
     private void ChangeHealth(int amount)
     {
-        CurrentHealth += amount;
+        var previousHealth = CurrentHealth;
 
-        OnChangeHealth?.Invoke();
-        Debug.Log($"{name} change health to {CurrentHealth}");
+        CurrentHealth += (uint) amount;
+        CurrentHealth = (uint) Mathf.Clamp(CurrentHealth, 0, MaxHealth);
+
+        // only announce if health has changed
+        if (CurrentHealth != previousHealth)
+        {
+            OnChangeHealth?.Invoke(CurrentHealth);
+            Debug.Log($"{name} change health to {CurrentHealth}");
+        }
+
     }
 }

@@ -9,9 +9,9 @@ namespace Daadab
         {
             base.ModifyTruck(truck);
 
-            if (truck.TryGetComponent(out Health health))
+            if (truck.TryGetComponent(out IDamageable damageable))
             {
-                health.AddHealth();
+                damageable.AddHealth();
             }
         }
     }

@@ -5,9 +5,9 @@ namespace Daadab
 {
     public interface IDamageable
     {
-        public float CurrentHealth { get; set; }
-        public float MaxHealth { get; set; }
-        public int Defense { get; set; }
+        public uint CurrentHealth { get; set; }
+        public uint MaxHealth { get; set; }
+        public uint Defense { get; set; }
         public void Die();
         public void TakeDamage();
         public void AddHealth();

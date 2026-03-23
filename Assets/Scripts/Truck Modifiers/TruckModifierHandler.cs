@@ -34,6 +34,18 @@ namespace Daadab
         {
             if (other.TryGetComponent(out TruckModifier modifier))
             {
+                for (int i = activeModifiers.Count - 1; i > -1; i--)
+                {
+                    if (activeModifiers[i].Modifier.IsCancelledBy(modifier.GetModifier()))
+                    {
+                        activeModifiers.RemoveAt(i);
+                    }
+                    else if (activeModifiers[i].Modifier == modifier.GetModifier())
+                    {
+                        activeModifiers.RemoveAt(i);
+                    }
+                }
+
                 modifier.GetModifier().ModifyTruck(truck);
 
                 if (modifier.GetModifier().GetLifeTime() > 0)
