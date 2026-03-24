@@ -4,9 +4,9 @@ using UnityEngine;
 namespace Daadab
 {
     [Serializable]
-    public class UnitData
+    public class PooledObjectData
     {
-        public UnitVariable UnitVariable;
+        public PooledObjectVariable Variable;
         public Vector3 Position;
         public Quaternion Rotation;
         public Vector3 Scale;

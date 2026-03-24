@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba3b014c55b56cf46a4e8a2e620955b9, type: 3}
-  m_Name: Sand Trap Hazard Unit
+  m_Name: Water Pickup Unit
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.UnitVariable
   me: {fileID: 11400000}
-  unit: {fileID: 6236942308094885650, guid: 571667d1027ce8144b8535b358dcb7dc, type: 3}
+  obj: {fileID: 4893081512892164212, guid: e8611790a3f522b42a8d323a1f4b6022, type: 3}

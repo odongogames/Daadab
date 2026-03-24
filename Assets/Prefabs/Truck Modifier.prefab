@@ -96,6 +96,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2390530321262961605, guid: 01370e56798965c47812858dc3379899, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8613036233402325350}
+    - targetCorrespondingSourceObject: {fileID: 2390530321262961605, guid: 01370e56798965c47812858dc3379899, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8928434814179413403}
   m_SourcePrefab: {fileID: 100100000, guid: 01370e56798965c47812858dc3379899, type: 3}
 --- !u!1 &1539696230298173179 stripped
 GameObject:
@@ -136,6 +139,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.TruckModifier
   modifier: {fileID: 0}
+--- !u!114 &8928434814179413403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539696230298173179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31d08f6d3b5e88c4992070fa65ecaacb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Daadab.PooledObject
+  data:
+    Variable: {fileID: 0}
+    Position: {x: 0, y: 0, z: 0}
+    Rotation: {x: 0, y: 0, z: 0, w: 0}
+    Scale: {x: 0, y: 0, z: 0}
 --- !u!4 &4148313096358694098 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1000647877016179180, guid: 01370e56798965c47812858dc3379899, type: 3}

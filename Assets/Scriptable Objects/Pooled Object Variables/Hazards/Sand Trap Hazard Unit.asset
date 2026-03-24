@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba3b014c55b56cf46a4e8a2e620955b9, type: 3}
-  m_Name: Speed Boost Pickup Unit
+  m_Name: Sand Trap Hazard Unit
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.UnitVariable
   me: {fileID: 11400000}
-  unit: {fileID: 3051493799034536585, guid: 2f5bf87729aadc445af1883478be938f, type: 3}
+  obj: {fileID: 1785374779850494345, guid: 571667d1027ce8144b8535b358dcb7dc, type: 3}

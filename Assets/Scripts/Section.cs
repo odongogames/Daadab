@@ -11,6 +11,13 @@ namespace Daadab
         public Transform SectionEnd => sectionEnd;
         [SerializeField] private ObjectSpawner objectSpawner;
 
+        [SerializeField] private Transform playerTransform;
+
+        private Transform myTransform;
+
+        // TODO: Find player transform in a better way
+        public void SetPlayerTransform(Transform trans) => playerTransform = trans;
+
         private void Awake()
         {
             Assert.IsNotNull(sectionStart);
@@ -18,17 +25,31 @@ namespace Daadab
             Assert.IsNotNull(objectSpawner);
 
             Assert.IsTrue(sectionEnd.position.z > sectionStart.position.z);
+
+            myTransform = transform;
         }
 
-        public void SetUnitSequence(UnitSequence unitSequence)
+        private void Update()
         {
-            if (null == unitSequence)
+            if (null != playerTransform)
             {
-                Debug.LogError($"{name} cannot spawn objects. Unit sequence is null!");
+                if (playerTransform.position.z > myTransform.position.z + 60)
+                {
+                    objectSpawner.Disable();
+                    gameObject.SetActive(false);
+                }
+            }
+        }
+
+        public void SetObjectSequence(PooledObjectSequence sequence)
+        {
+            if (null == sequence)
+            {
+                Debug.LogError($"{name} cannot spawn objects. Object sequence is null!");
                 return;
             }
 
-            objectSpawner.SpawnObjects(unitSequence);
+            objectSpawner.SpawnObjects(sequence);
         }
 
         public float GetLength()

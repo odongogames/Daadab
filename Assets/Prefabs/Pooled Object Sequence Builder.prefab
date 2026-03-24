@@ -62,9 +62,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7875860253928471998, guid: 03dcc05ddaa6b4247a85e88144a89a60, type: 3}
       propertyPath: m_Name
-      value: Unit Sequence Builder
+      value: Pooled Object Sequence Builder
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1973012611010678122, guid: 03dcc05ddaa6b4247a85e88144a89a60, type: 3}
+    - {fileID: 4745094622747066950, guid: 03dcc05ddaa6b4247a85e88144a89a60, type: 3}
+    - {fileID: 5598648954565337157, guid: 03dcc05ddaa6b4247a85e88144a89a60, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -94,7 +97,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 069b33c54acfd5547835cd762e4f1c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.UnitSequenceBuilder
-  sequence: {fileID: 0}
   leftLaneHolder: {fileID: 2589963100389443199}
   midLaneHolder: {fileID: 5035086769573079590}
   rightLaneHolder: {fileID: 4307348772841425296}

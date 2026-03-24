@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba3b014c55b56cf46a4e8a2e620955b9, type: 3}
-  m_Name: Health Pickup Unit
+  m_Name: Speed Boost Pickup Unit
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.UnitVariable
   me: {fileID: 11400000}
-  unit: {fileID: 5080762769224855371, guid: 5e510ec9e9ff07849abebcca4f465d53, type: 3}
+  obj: {fileID: 7210800022319098898, guid: 2f5bf87729aadc445af1883478be938f, type: 3}

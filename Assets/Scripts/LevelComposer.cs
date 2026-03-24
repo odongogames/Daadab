@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -30,25 +28,27 @@ namespace Daadab
         /// Example: When player has covered 20% of world playerDistToWorldEndNormalised is 0.8f
         /// if  sectionCreateDistanceNormalised is greater than 0.8f activate next section
         /// </summary>
-        [SerializeField] [Range(0,1)] private float sectionCreateDistanceNormalised = 0.8f;
+        [SerializeField][Range(0, 1)] private float sectionCreateDistanceNormalised = 0.8f;
         /// <summary>
         /// The most recently spawned section
         /// </summary>
         [SerializeField] private Section lastSection;
         [SerializeField] private List<Section> sections = new();
 
-        [Header("Unit Sequences")]
-        [SerializeField] private List<UnitSequence> unitSequences = new();
+        [Header("Object Sequences")]
+        [SerializeField] private List<PooledObjectSequence> objectSequences = new();
 
         [Header("Runtime Only")]
         [SerializeField] private bool initialised;
         [SerializeField] private float worldLength;
         [SerializeField] private float playerDistToWorldEnd;
-        [SerializeField] [Range(0,1)] private float playerDistToWorldEndNormalised;
-        
+        [SerializeField][Range(0, 1)] private float playerDistToWorldEndNormalised;
+        [SerializeField] private List<PooledObjectCount> objectCounts = new();
 
         private int sectionIndex;
-        private int unitSequenceIndex;
+        private int objectSequenceIndex;
+
+        private ObjectPool objectPool;
 
         private void Awake()
         {
@@ -67,14 +67,27 @@ namespace Daadab
                 sections.Add(obj);
             }
 
-            Assert.IsTrue(unitSequences.Count > 0);
+            Assert.IsTrue(objectSequences.Count > 0);
             Assert.IsTrue(worldEnd.position.z > worldStart.position.z);
             Assert.IsTrue(sectionCreateDistanceNormalised > 0);
 
             worldLength = worldEnd.position.z - worldStart.position.z;
             Assert.IsTrue(worldLength > 0);
 
-            int counter = 0; 
+            objectPool = ObjectPool.Instance;
+
+            CountPooledObjectsFromObjectSequences();
+
+            foreach (var count in objectCounts)
+            {
+                var poolAmount = Mathf.CeilToInt(count.Count / objectCounts.Count);
+                objectPool.AddPool(count.PooledObject, (int)count.Count);
+            }
+        }
+
+        private void Start()
+        {
+            int counter = 0;
 
             while (counter < sectionAmount && spawnedDistance < worldLength)
             {
@@ -130,12 +143,11 @@ namespace Daadab
             lastSection = section;
             section.gameObject.SetActive(true);
 
-            if (sectionSpawnCounter > 1)
+            if (sectionSpawnCounter > 0)
             {
-                section.SetUnitSequence(unitSequences[unitSequenceIndex]);
-                unitSequenceIndex++;
-                if (unitSequenceIndex >= unitSequences.Count)
-                    unitSequenceIndex = 0;
+                objectSequenceIndex = UnityEngine.Random.Range(0, objectSequences.Count);
+                section.SetPlayerTransform(playerTransform);
+                section.SetObjectSequence(objectSequences[objectSequenceIndex]);
             }
 
             sectionSpawnCounter++;
@@ -144,5 +156,49 @@ namespace Daadab
             if (sectionIndex >= sections.Count)
                 sectionIndex = 0;
         }
+
+        private void CountPooledObjectsFromObjectSequences()
+        {
+            foreach (var sequence in objectSequences)
+            {
+                CountPooledObjectsFromTransform(sequence.LeftLaneHolder);
+                CountPooledObjectsFromTransform(sequence.MidLaneHolder);
+                CountPooledObjectsFromTransform(sequence.RightLaneHolder);
+            }
+        }
+
+        private void CountPooledObjectsFromTransform(Transform trans)
+        {
+            foreach (Transform child in trans)
+            {
+                var pooledObject = child.GetComponent<PooledObject>();
+                if (null == pooledObject)
+                {
+                    Debug.LogWarning($"{child.name} is not a pooled object", child);
+                    continue;
+                }
+
+                bool found = false;
+
+                for (int i = 0; i < objectCounts.Count; i++)
+                {
+                    if (string.Equals(objectCounts[i].PooledObject.name, pooledObject.name, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        objectCounts[i].Count++;
+                        found = true;
+                    }
+                }
+
+                if (!found)
+                {
+                    objectCounts.Add(new PooledObjectCount
+                    {
+                        PooledObject = pooledObject,
+                        Count = 1
+                    });
+                }
+            }
+        }
+
     }
 }

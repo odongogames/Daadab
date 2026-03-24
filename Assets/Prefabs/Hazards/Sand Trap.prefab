@@ -146,6 +146,10 @@ PrefabInstance:
       propertyPath: modifier
       value: 
       objectReference: {fileID: 11400000, guid: 39b943ebea191ea40954c1457de2e12d, type: 2}
+    - target: {fileID: 8928434814179413403, guid: e4d10ec4ed488f84189c9f1d4b329448, type: 3}
+      propertyPath: data.Variable
+      value: 
+      objectReference: {fileID: 11400000, guid: 97958a7289d47ae4ab5be7190a6ee3f4, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
