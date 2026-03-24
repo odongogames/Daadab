@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16b0ebeedcee9f44bae0e635d16b2930, type: 3}
   m_Name: Registry
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.Registry
-  me: {fileID: 0}
-  laneDistance: 3
+  me: {fileID: 11400000}
+  laneDistance: 6
+  curveWorld: 1
+  sidewaysCurveStrength: 0
+  backwardsCurveStrength: -0.00025

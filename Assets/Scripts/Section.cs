@@ -33,7 +33,7 @@ namespace Daadab
         {
             if (null != playerTransform)
             {
-                if (playerTransform.position.z > myTransform.position.z + 60)
+                if (playerTransform.position.z > myTransform.position.z + 90)
                 {
                     objectSpawner.Disable();
                     gameObject.SetActive(false);
