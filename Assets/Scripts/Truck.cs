@@ -8,6 +8,7 @@ namespace Daadab
 {
     public class Truck : MonoBehaviour, IUnitComponent
     {
+        public static Truck Instance;
         [SerializeField] private Registry registry;
 
         [Header("Movement")]
@@ -36,6 +37,15 @@ namespace Daadab
 
         private void Awake()
         {
+            if (Instance != null)
+            {
+                Debug.Log($"Destroying {this.GetType()} as more than one instance found.");
+                Destroy(this);
+                return;
+            }
+
+            Instance = this;
+            
             myTransform = transform;
 
             Assert.IsNotNull(registry);
