@@ -496,6 +496,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.FollowTransform
   target: {fileID: 2074224333}
   offset: {x: 0, y: 0, z: 0}
+  xPositionMultiplier: 0.5
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1598,7 +1599,8 @@ PrefabInstance:
       value: Object Sequence 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5160588732228328387, guid: 01afe7effe04dd44fa5995c1d3b08cc8, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01afe7effe04dd44fa5995c1d3b08cc8, type: 3}

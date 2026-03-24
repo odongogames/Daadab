@@ -34,6 +34,8 @@ namespace Daadab
         private Lane previousLane;
         private Transform myTransform;
 
+        public Action<uint> OnAddToWaterTank;
+
 
         private void Awake()
         {
@@ -45,7 +47,7 @@ namespace Daadab
             }
 
             Instance = this;
-            
+
             myTransform = transform;
 
             Assert.IsNotNull(registry);
@@ -118,6 +120,7 @@ namespace Daadab
         {
             waterTank++;
             Debug.Log($"Add to watertank: {waterTank}");
+            OnAddToWaterTank?.Invoke(waterTank);
         }
 
         public void EnterActiveState()

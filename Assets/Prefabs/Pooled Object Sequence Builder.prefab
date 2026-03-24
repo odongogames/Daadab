@@ -60,17 +60,9 @@ PrefabInstance:
       propertyPath: m_UnmodifiedMeshVersion
       value: 1453
       objectReference: {fileID: 0}
-    - target: {fileID: 7830757421495918382, guid: 03dcc05ddaa6b4247a85e88144a89a60, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 4.5
-      objectReference: {fileID: 0}
     - target: {fileID: 7875860253928471998, guid: 03dcc05ddaa6b4247a85e88144a89a60, type: 3}
       propertyPath: m_Name
       value: Pooled Object Sequence Builder
-      objectReference: {fileID: 0}
-    - target: {fileID: 8402541759518478529, guid: 03dcc05ddaa6b4247a85e88144a89a60, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -4.5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1973012611010678122, guid: 03dcc05ddaa6b4247a85e88144a89a60, type: 3}

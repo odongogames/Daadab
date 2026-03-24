@@ -8,9 +8,16 @@ namespace Daadab
     {
         [SerializeField] private GameObject[] heartContainers;
         private Health playerHealth;
+        private Animator animator;
+
+        private int growHash;
 
         private void Awake()
         {
+            //TODO: put an animator on each heart container
+            // animator = GetComponent<Animator>();
+            // Assert.IsNotNull(animator);
+
             Assert.IsTrue(heartContainers.Length == 3);
         }
 

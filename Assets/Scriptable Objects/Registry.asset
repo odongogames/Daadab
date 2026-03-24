@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.Registry
   me: {fileID: 11400000}
   laneDistance: 6
-  curveWorld: 1
+  curveWorld: 0
   sidewaysCurveStrength: 0
-  backwardsCurveStrength: -0.00025
+  backwardsCurveStrength: -0.0005

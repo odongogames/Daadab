@@ -1,28 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Daadab
 {
     public class UnitAnimator : MonoBehaviour, IUnitComponent
     {
-        [SerializeField] protected Animator animator;
+        private Animator animator;
 
-        public Animator GetAnimator() => animator;
+        private void Awake()
+        {
+            animator = GetComponent<Animator>();
+            Assert.IsNotNull(animator);
+        }
 
-        public virtual void EnterActiveState()
+        public void EnterActiveState()
         {
             if (animator)
                 animator.enabled = true;
         }
 
-        public virtual void ExitActiveState()
+        public void ExitActiveState()
         {
             if (animator)
                 animator.enabled = false;
         }
 
-        public virtual void ResetMe()
+        public void ResetMe()
         {
             
         }

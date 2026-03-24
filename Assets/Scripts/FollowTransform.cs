@@ -9,9 +9,7 @@ namespace Daadab
         [SerializeField] private Transform target;
         [SerializeField] private Vector3 offset;
         [SerializeField] [Range(0,1)] private float xPositionMultiplier = 0.5f;
-        [SerializeField] private float smoothTime = 1;
 
-        private Vector3 velocity;
         private Transform myTransform;
 
         private void Awake()
@@ -29,13 +27,6 @@ namespace Daadab
             newPosition.x *= xPositionMultiplier;
 
             myTransform.position = newPosition;
-
-            // myTransform.position = Vector3.SmoothDamp(
-            //     current: myTransform.position, 
-            //     target: newPosition,
-            //     currentVelocity: ref velocity,
-            //     smoothTime: Time.deltaTime * smoothTime
-            // );
         }
     }
 }

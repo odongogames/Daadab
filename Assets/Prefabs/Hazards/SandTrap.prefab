@@ -51,7 +51,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 075ebc73fbbb58a439588b1b55d8fe96, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: e193debb11092154a9ff3272a4322fe0, type: 2}
+      objectReference: {fileID: 2100000, guid: 2b6c63f6d7bfe004684c4c3220f75257, type: 2}
     - target: {fileID: 919132149155446097, guid: 075ebc73fbbb58a439588b1b55d8fe96, type: 3}
       propertyPath: m_Name
       value: Sand Trap
@@ -76,7 +76,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 848589316014084766, guid: e4d10ec4ed488f84189c9f1d4b329448, type: 3}
       propertyPath: m_Size.x
-      value: 2
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 848589316014084766, guid: e4d10ec4ed488f84189c9f1d4b329448, type: 3}
       propertyPath: m_Size.y
@@ -84,7 +84,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 848589316014084766, guid: e4d10ec4ed488f84189c9f1d4b329448, type: 3}
       propertyPath: m_Size.z
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 848589316014084766, guid: e4d10ec4ed488f84189c9f1d4b329448, type: 3}
       propertyPath: m_Center.y
