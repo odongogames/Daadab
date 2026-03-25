@@ -302,7 +302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4190066936487291648, guid: d2d4b2c329c12ee459a067f286483fde, type: 3}
       propertyPath: m_Name
-      value: Object Sequence 2 Variant
+      value: Object Sequence 2
       objectReference: {fileID: 0}
     - target: {fileID: 5294999753098059451, guid: d2d4b2c329c12ee459a067f286483fde, type: 3}
       propertyPath: sequence
@@ -376,7 +376,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6538949616120139968, guid: 571667d1027ce8144b8535b358dcb7dc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 20
+      value: 30.5
       objectReference: {fileID: 0}
     - target: {fileID: 6538949616120139968, guid: 571667d1027ce8144b8535b358dcb7dc, type: 3}
       propertyPath: m_LocalRotation.w

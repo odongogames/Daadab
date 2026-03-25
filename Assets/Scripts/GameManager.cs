@@ -14,6 +14,9 @@ namespace Daadab
         public static Action OnResetGame;
         public static Action OnStartGame;
 
+        private float gameTime;
+        public float GetGameTime() => gameTime;
+
         private void Awake()
         {
             if (Instance != null)
@@ -43,6 +46,14 @@ namespace Daadab
             playerHealth.OnTakeDamage += Player_OnTakeDamage;
 
             StartCoroutine(StartGameCO());
+        }
+
+        private void Update()
+        {
+            if (gameStateMachine.GetCurrentState() == GameState.Gameplay)
+            {
+                gameTime += Time.deltaTime;
+            }
         }
 
         private void OnDestroy()

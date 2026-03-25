@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.SpeedBoostPickup
   me: {fileID: 11400000}
   cancellers: []
-  lifeTime: 5
+  lifeTime: 0
+  disableOnUse: 1
+  audio: {fileID: 11400000, guid: f2b1f005fbd21214cb35c9d63ed33092, type: 2}

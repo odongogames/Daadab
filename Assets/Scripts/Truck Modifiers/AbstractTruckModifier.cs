@@ -13,6 +13,15 @@ namespace Daadab
         [SerializeField] protected float lifeTime = 0;
         public float GetLifeTime() => lifeTime;
 
+        /// <summary>
+        /// Should the modifier be disable once it touches player
+        /// </summary>
+        [SerializeField] protected bool disableOnUse;
+        public bool DisableOnUse() => disableOnUse;
+
+        [SerializeField] protected AudioClips audio;
+        public AudioClips GetAudio() => audio;
+
         public virtual void ModifyTruck(Truck truck)
         {
             // Debug.Log($"{name} modify truck");

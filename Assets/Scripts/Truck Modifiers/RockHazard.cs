@@ -7,6 +7,12 @@ namespace Daadab
     {
         public override void ModifyTruck(Truck truck)
         {
+            if (truck.IsBoosting())
+            {
+                Debug.Log($"{name} cannot modify truck it's boosting");
+                return;
+            }
+
             base.ModifyTruck(truck);
 
             if (truck.TryGetComponent(out IDamageable damageable))
@@ -19,6 +25,12 @@ namespace Daadab
 
         public override void FinishModifyingTruck(Truck truck)
         {
+            if (truck.IsBoosting())
+            {
+                Debug.Log($"{name} cannot modify truck it's boosting");
+                return;
+            }
+
             base.FinishModifyingTruck(truck);
 
             truck.RestoreSpeed();

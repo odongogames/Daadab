@@ -7,7 +7,7 @@ namespace Daadab
     {
         [SerializeField] private InputReader inputReader;
 
-        private Truck laneSwitcher;
+        private Truck truck;
 
         public void EnterActiveState()
         {
@@ -28,20 +28,25 @@ namespace Daadab
         {
             Assert.IsNotNull(inputReader);
 
-            laneSwitcher = GetComponent<Truck>();
-            Assert.IsNotNull(laneSwitcher);
+            truck = GetComponent<Truck>();
+            Assert.IsNotNull(truck);
         }
 
         private void Update()
         {
             if (inputReader.StartMovingLeft())
             {
-                laneSwitcher.SetXDirection(-1);
+                truck.SetXDirection(-1);
             }
 
             if (inputReader.StartMovingRight())
             {
-                laneSwitcher.SetXDirection(1);
+                truck.SetXDirection(1);
+            }
+
+            if (inputReader.StartBoost())
+            {
+                truck.StartBoost();
             }
         }
     }

@@ -7,6 +7,12 @@ namespace Daadab
     {
         public override void ModifyTruck(Truck truck)
         {
+            if (truck.IsBoosting())
+            {
+                Debug.Log($"{name} cannot modify truck it's boosting");
+                return;
+            }
+            
             base.ModifyTruck(truck);
 
             truck.ReduceSpeed();
@@ -14,6 +20,12 @@ namespace Daadab
 
         public override void ExitTrigger(Truck truck)
         {
+            if (truck.IsBoosting())
+            {
+                Debug.Log($"{name} cannot modify truck it's boosting");
+                return;
+            }
+            
             base.ExitTrigger(truck);
 
             truck.RestoreSpeed();

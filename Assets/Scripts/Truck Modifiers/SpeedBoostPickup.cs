@@ -9,14 +9,14 @@ namespace Daadab
         {
             base.ModifyTruck(truck);
 
-            truck.BoostSpeed();
+            truck.AddBoost();
         }
 
-        public override void FinishModifyingTruck(Truck truck)
-        {
-            base.FinishModifyingTruck(truck);
+        // public override void FinishModifyingTruck(Truck truck)
+        // {
+        //     base.FinishModifyingTruck(truck);
 
-            truck.RestoreSpeed();
-        }
+        //     truck.RestoreSpeed();
+        // }
     }
 }

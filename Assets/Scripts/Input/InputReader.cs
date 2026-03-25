@@ -11,7 +11,10 @@ namespace Daadab
         public bool MoveLeft() => inputActions.Player.MoveLeft.IsPressed();
 
         public bool StartMovingRight() => inputActions.Player.MoveRight.WasPressedThisFrame();
-        public bool MoveRight() => inputActions.Player.MoveRight.WasPressedThisFrame();
+        public bool MoveRight() => inputActions.Player.MoveRight.IsPressed();
+
+        public bool StartBoost() => inputActions.Player.Boost.WasPressedThisFrame();
+        public bool Boost() => inputActions.Player.Boost.IsPressed();
 
         public bool StartBraking() => inputActions.Player.Brake.WasPressedThisFrame();
         public bool Brake() => inputActions.Player.Brake.IsPressed();

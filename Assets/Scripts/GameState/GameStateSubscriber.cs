@@ -20,7 +20,7 @@ namespace Daadab
         {
             if (activeGameState == GameState.None)
             {
-                Debug.LogError(name + " does not have any active state!", this);
+                Debug.LogError(GetType() + " does not have any active state!", this);
                 return;
             }
 

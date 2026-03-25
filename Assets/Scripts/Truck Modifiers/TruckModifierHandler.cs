@@ -20,6 +20,7 @@ namespace Daadab
 
         private Truck truck;
         private GameStateMachine gameStateMachine;
+        private SFXPlayer SFXPlayer;
 
         public void EnterActiveState()
         {
@@ -49,6 +50,9 @@ namespace Daadab
 
             gameStateMachine = GameStateMachine.Instance;
             Assert.IsNotNull(gameStateMachine);
+
+            SFXPlayer = SFXPlayer.Instance;
+            Assert.IsNotNull(SFXPlayer);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -67,6 +71,11 @@ namespace Daadab
                     }
                 }
 
+                if (modifier.GetModifier().GetAudio() != null)
+                {
+                    SFXPlayer.PlayClip(modifier.GetModifier().GetAudio());
+                }
+
                 modifier.GetModifier().ModifyTruck(truck);
 
                 if (modifier.GetModifier().GetLifeTime() > 0)
@@ -77,6 +86,11 @@ namespace Daadab
                         StartTime = gameStateMachine.GetGameTime(),
                         LifeTime = modifier.GetModifier().GetLifeTime()
                     });
+                }
+
+                if (modifier.GetModifier().DisableOnUse())
+                {
+                    modifier.gameObject.SetActive(false);
                 }
             }
         }

@@ -15,3 +15,5 @@ MonoBehaviour:
   me: {fileID: 11400000}
   cancellers: []
   lifeTime: 1
+  disableOnUse: 0
+  audio: {fileID: 11400000, guid: dc974ada49fad4846ac0c29053f400a8, type: 2}

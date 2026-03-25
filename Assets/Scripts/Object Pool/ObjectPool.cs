@@ -45,10 +45,10 @@ namespace Daadab
                     instance.Pool = this;
                     instance.gameObject.SetActive(false);
                     stack.Push(instance);
+                }
 
                     if(!objectsToPool.ContainsKey(pooledObject.name))
-                        objectsToPool.Add(pooledObject.name, instance);
-                }
+                        objectsToPool.Add(pooledObject.name, pooledObject);
 
                 pools.Add(key: pooledObject.name, value: stack);
             }
@@ -96,11 +96,15 @@ namespace Daadab
                     pooledObject.gameObject.SetActive(false);
                     // Debug.Log($"Return {pooledObject.name} to pool");
                 }
+                // else
+                // {
+                //     Debug.LogWarning($"{pooledObject.name} is already in stack");
+                // }
             }
-            else
-            {
-                Debug.LogWarning($"{pooledObject.name} cannot be returned to pool", pooledObject);
-            }
+            // else
+            // {
+            //     Debug.LogWarning($"{pooledObject.name} cannot be returned to pool", pooledObject);
+            // }
         }
     }
 }

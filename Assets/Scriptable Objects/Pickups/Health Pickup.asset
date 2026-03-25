@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8f5fb7a2c9c6df45a232f5c2131f315, type: 3}
   m_Name: Health Pickup
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.HealthPickup
-  me: {fileID: 0}
+  me: {fileID: 11400000}
+  cancellers: []
   lifeTime: 0
+  disableOnUse: 1
+  audio: {fileID: 11400000, guid: f2b1f005fbd21214cb35c9d63ed33092, type: 2}

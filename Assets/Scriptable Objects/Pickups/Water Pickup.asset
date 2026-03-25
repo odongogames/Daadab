@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3738f990484ea1499a607b86620dc27, type: 3}
   m_Name: Water Pickup
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.WaterPickup
-  me: {fileID: 0}
+  me: {fileID: 11400000}
   cancellers: []
   lifeTime: 0
+  disableOnUse: 1
+  audio: {fileID: 11400000, guid: 094c207320234334ba1a7045dae6475e, type: 2}

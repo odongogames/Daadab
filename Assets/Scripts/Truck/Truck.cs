@@ -33,10 +33,14 @@ namespace Daadab
         private float lastMoveTime = 0;
         private Vector3 originalPosition;
         private Lane previousLane;
+
         private Transform myTransform;
+        private SpeedBooster booster;
+        private SFXPlayer SFXPlayer;
 
         public Action<uint> OnAddToWaterTank;
 
+        public bool IsBoosting() => booster.IsBoosting();
 
         private void Awake()
         {
@@ -54,9 +58,18 @@ namespace Daadab
 
             Assert.IsNotNull(registry);
 
+            booster = GetComponent<SpeedBooster>();
+            Assert.IsNotNull(booster);
+
             zSpeedOriginal = zSpeed;
             zSpeedReduced = zSpeed / 2;
-            zSpeedBoosted = zSpeed * 1.5f;
+            zSpeedBoosted = zSpeed * 2f;
+        }
+
+        private void Start()
+        {
+            SFXPlayer = SFXPlayer.Instance;
+            Assert.IsNotNull(SFXPlayer);
         }
 
         private void FixedUpdate()
@@ -118,7 +131,7 @@ namespace Daadab
             }
         }
 
-        // TODO: Consider moving water tank to game manager
+        // TODO: Consider moving water tank to another component
         public void AddToWaterTank()
         {
             waterTank++;
@@ -159,11 +172,19 @@ namespace Daadab
             disableLaneSwitching = false;
         }
 
-        public void BoostSpeed()
+        public void StartBoost()
         {
-            disableLaneSwitching = false;
+            if (booster.StartBoost())
+            {
+                disableLaneSwitching = false;
 
-            zSpeed = zSpeedBoosted;
+                zSpeed = zSpeedBoosted;                
+            }
+        }
+
+        public void AddBoost()
+        {
+            booster.AddBoost();
         }
     }
 }

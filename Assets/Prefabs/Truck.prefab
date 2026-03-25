@@ -377,6 +377,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2390530321262961605, guid: 01370e56798965c47812858dc3379899, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8818056710226265594}
+    - targetCorrespondingSourceObject: {fileID: 2390530321262961605, guid: 01370e56798965c47812858dc3379899, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6436303397950793327}
   m_SourcePrefab: {fileID: 100100000, guid: 01370e56798965c47812858dc3379899, type: 3}
 --- !u!1 &1531766362626961360 stripped
 GameObject:
@@ -490,6 +493,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.TruckModifierHandler
   activeModifiers: []
+--- !u!114 &6436303397950793327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531766362626961360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ad65f9cb116f8a468d8b8f2acc3f573, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Daadab.SpeedBooster
+  maxBoostCount: 3
+  boostDuration: 0
+  boostDurationShort: 1.5
+  boostDurationMedium: 3
+  boostDurationLong: 6
+  boostCount: 0
 --- !u!4 &4147305342086422009 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1000647877016179180, guid: 01370e56798965c47812858dc3379899, type: 3}
