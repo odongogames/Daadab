@@ -56,7 +56,7 @@ namespace Daadab
         // returns the first active GameObject from the pool
         public PooledObject GetPooledObject(string objectName)
         {
-            Debug.Log($"Try get {objectName} from pool");
+            // Debug.Log($"Try get {objectName} from pool");
 
             if (pools.TryGetValue(objectName, out Stack<PooledObject> stack))
             {
@@ -77,7 +77,7 @@ namespace Daadab
                 PooledObject nextInstance = stack.Pop();
                 nextInstance.gameObject.SetActive(true);
 
-                Debug.Log($"Return {nextInstance.name} from pool");
+                // Debug.Log($"Get {nextInstance.name} from pool");
 
                 return nextInstance;
             }
@@ -91,7 +91,7 @@ namespace Daadab
             {
                 stack.Push(pooledObject);
                 pooledObject.gameObject.SetActive(false);
-                Debug.Log($"Return {pooledObject.name} to pool");
+                // Debug.Log($"Return {pooledObject.name} to pool");
             }
             else
             {
