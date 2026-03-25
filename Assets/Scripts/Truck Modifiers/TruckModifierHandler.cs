@@ -14,12 +14,33 @@ namespace Daadab
         public float LifeTime;
     }
 
-    public class TruckModifierHandler : MonoBehaviour
+    public class TruckModifierHandler : MonoBehaviour, IUnitComponent
     {
         [SerializeField] private List<TruckModifierItem> activeModifiers = new();
 
         private Truck truck;
         private GameStateMachine gameStateMachine;
+
+        public void EnterActiveState()
+        {
+            enabled = true;
+        }
+
+        public void ExitActiveState()
+        {
+            enabled = false;
+        }
+
+        public void ResetMe()
+        {
+            foreach (var modifier in activeModifiers)
+            {
+                modifier.Modifier.FinishModifyingTruck(truck);
+                modifier.Modifier.ExitTrigger(truck);
+            }
+            
+            activeModifiers.Clear();
+        }
 
         private void Awake()
         {

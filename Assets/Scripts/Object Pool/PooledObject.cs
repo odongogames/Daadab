@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Daadab
@@ -15,69 +16,63 @@ namespace Daadab
         public PooledObjectData GetData() => data;
         public Transform Transform
         {
-            get 
+            get
             {
                 if (null == myTransform)
                 {
                     myTransform = transform;
                 }
-                
+
                 return myTransform;
             }
         }
         public GameObject GameObject
         {
-            get 
+            get
             {
                 if (null == myGameObject)
                 {
                     myGameObject = gameObject;
                 }
-                
+
                 return myGameObject;
             }
         }
 
         private void Awake()
         {
-            SaveData();
+            
 
             myTransform = transform;
 
             originalParent = myTransform.parent;
+
+            GameManager.OnResetGame += GameManager_OnResetGame;
         }
 
-
-        [ContextMenu("Save Data")]
-        public void SaveData()
+        private void OnDestroy()
         {
-            if (null == myTransform)
-            {
-                myTransform = transform;
-            }
-
-            data.Position = myTransform.localPosition;
-            data.Rotation = myTransform.rotation;
-            data.Scale = myTransform.localScale;
+            GameManager.OnResetGame -= GameManager_OnResetGame;
         }
 
-        public void SetData(PooledObjectData newData)
+        private void GameManager_OnResetGame()
         {
-            data = newData;
-        }
-
-        public void ApplyData()
-        {
-            myTransform.localPosition = data.Position;
-            myTransform.rotation = data.Rotation;
-            myTransform.localScale = data.Scale;
+            Release();
         }
 
         public void Release()
         {
             pool.ReturnToPool(this);
-            
-            myTransform.SetParent(originalParent, worldPositionStays: false);
+
+            // myTransform.SetParent(originalParent, worldPositionStays: false);
+        }
+        
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("PooledObjectRemover"))
+            {
+                Release();
+            }
         }
     }
 }

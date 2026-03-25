@@ -10,7 +10,8 @@ public class Health : MonoBehaviour, IDamageable
     [SerializeField] private uint maxHealth = 3;
     public uint MaxHealth { get; set; }
 
-    public Action<uint> OnChangeHealth;
+    public Action<uint> OnTakeDamage;
+    public Action<uint> OnAddHealth;
     public Action OnDie;
 
     private void Awake()
@@ -30,6 +31,7 @@ public class Health : MonoBehaviour, IDamageable
         }
 
         ChangeHealth(-1);
+        OnTakeDamage?.Invoke(CurrentHealth);
 
         if (CurrentHealth <= 0)
         {
@@ -55,8 +57,15 @@ public class Health : MonoBehaviour, IDamageable
             Debug.Log($"{name} is already dead.");
             return;
         }
+        if (CurrentHealth == MaxHealth)
+        {
+            Debug.Log($"{name} is already at MAX health.");
+            return;
+        }
         
         ChangeHealth(1);
+
+        OnAddHealth?.Invoke(CurrentHealth);
     }
 
     private void ChangeHealth(int amount)
@@ -69,7 +78,6 @@ public class Health : MonoBehaviour, IDamageable
         // only announce if health has changed
         if (CurrentHealth != previousHealth)
         {
-            OnChangeHealth?.Invoke(CurrentHealth);
             Debug.Log($"{name} change health to {CurrentHealth}");
         }
 

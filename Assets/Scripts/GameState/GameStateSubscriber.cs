@@ -22,23 +22,33 @@ namespace Daadab
                 Debug.LogError(name + " does not have any active state!", this);
                 return;
             }
-    
+
             gameStateMachine = GameStateMachine.Instance;
 
             gameStateMachine.AddGameStateSubscriber(this);
+
+            GameManager.OnResetGame += ResetMe;
         }
 
         public virtual void OnDestroy()
         {
             gameStateMachine.RemoveGameStateSubscriber(this);
+
+            GameManager.OnResetGame -= ResetMe;
         }
 
 
         public virtual void EnterActiveState()
         {
+            enabled = true;
         }
 
         public virtual void ExitActiveState()
+        {
+            enabled = false;
+        }
+
+        public virtual void ResetMe()
         {
         }
 

@@ -8,6 +8,7 @@ namespace Daadab
     {
         None = 0,
         Gameplay = 1,
-        Pause = 2
+        Pause = 2,
+        GameOver = 3,
     }
 }

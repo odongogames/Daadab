@@ -16,15 +16,6 @@ namespace Daadab
             unitComponents = new List<IUnitComponent>(GetComponentsInChildren<IUnitComponent>());
         }
 
-
-        public virtual void ResetMe()
-        {
-            for (int i = 0; i < unitComponents.Count; i++)
-            {
-                unitComponents[i].ResetMe();
-            }
-        }
-
         public override void EnterActiveState()
         {
             base.EnterActiveState();
@@ -45,5 +36,14 @@ namespace Daadab
             }
         }
 
+        public override void ResetMe()
+        {
+            base.ResetMe();
+            
+            for (int i = 0; i < unitComponents.Count; i++)
+            {
+                unitComponents[i].ResetMe();
+            }
+        }
     }
 }

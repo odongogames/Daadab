@@ -12,6 +12,9 @@ namespace Daadab
         /// </summary>
         [SerializeField][Range(0, 6)] private float laneDistance = 3;
         public float LaneDistance => laneDistance;
+        
+        [SerializeField] private uint objectSequenceLength = 60;
+        public float ObjectSequenceLength => objectSequenceLength;
 
         [SerializeField] private bool curveWorld;
         public bool CurveWorld => curveWorld;

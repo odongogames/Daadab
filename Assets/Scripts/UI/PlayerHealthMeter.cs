@@ -6,7 +6,7 @@ namespace Daadab
 {
     public class PlayerHealthMeter : MonoBehaviour
     {
-        [SerializeField] private GameObject[] heartContainers;
+        [SerializeField] private HeartContainer[] heartContainers;
         private Health playerHealth;
         private Animator animator;
 
@@ -29,20 +29,29 @@ namespace Daadab
             playerHealth = truck.GetComponent<Health>();
             Assert.IsNotNull(playerHealth);
 
-            playerHealth.OnChangeHealth += PlayerHealth_OnChangeHealth;
+            playerHealth.OnTakeDamage += Player_OnTakeDamage;
+            playerHealth.OnAddHealth += Player_OnAddHealth;
+
+            for (int i = 0; i < heartContainers.Length; i++)
+            {
+                heartContainers[i].Activate();
+            }
         }
 
         private void OnDestroy()
         {
-            playerHealth.OnChangeHealth -= PlayerHealth_OnChangeHealth;
+            playerHealth.OnTakeDamage -= Player_OnTakeDamage;
+            playerHealth.OnAddHealth -= Player_OnAddHealth;
         }
 
-        private void PlayerHealth_OnChangeHealth(uint value)
+        private void Player_OnTakeDamage(uint value)
         {
-            for (int i = 0; i < heartContainers.Length; i++)
-            {
-                heartContainers[i].SetActive(i + 1 <= value);
-            }
+            heartContainers[value].Deactivate();
+        }
+        
+        private void Player_OnAddHealth(uint value)
+        {
+            heartContainers[value - 1].Activate();
         }
     }
 }

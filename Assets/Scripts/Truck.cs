@@ -30,7 +30,8 @@ namespace Daadab
         private float zSpeedReduced;
         private float zSpeedOriginal;
         private float zSpeedBoosted;
-        private float lastMoveTime = 1;
+        private float lastMoveTime = 0;
+        private Vector3 originalPosition;
         private Lane previousLane;
         private Transform myTransform;
 
@@ -49,6 +50,7 @@ namespace Daadab
             Instance = this;
 
             myTransform = transform;
+            originalPosition = myTransform.position;
 
             Assert.IsNotNull(registry);
 
@@ -135,6 +137,7 @@ namespace Daadab
 
         public void ResetMe()
         {
+            myTransform.position = originalPosition;
         }
 
         public void ReduceSpeed()
