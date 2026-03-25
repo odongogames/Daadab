@@ -32,16 +32,23 @@ namespace Daadab
             playerHealth.OnTakeDamage += Player_OnTakeDamage;
             playerHealth.OnAddHealth += Player_OnAddHealth;
 
-            for (int i = 0; i < heartContainers.Length; i++)
-            {
-                heartContainers[i].Activate();
-            }
+            GameManager.OnStartGame += GameManager_OnStartGame;
         }
 
         private void OnDestroy()
         {
             playerHealth.OnTakeDamage -= Player_OnTakeDamage;
             playerHealth.OnAddHealth -= Player_OnAddHealth;
+
+            GameManager.OnStartGame -= GameManager_OnStartGame;
+        }
+
+        private void GameManager_OnStartGame()
+        {
+            for (int i = 0; i < heartContainers.Length; i++)
+            {
+                heartContainers[i].Activate();
+            }
         }
 
         private void Player_OnTakeDamage(uint value)

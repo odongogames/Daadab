@@ -3,11 +3,26 @@ using UnityEngine.Assertions;
 
 namespace Daadab
 {
-    public class TruckInput : MonoBehaviour
+    public class TruckInput : MonoBehaviour, IUnitComponent
     {
         [SerializeField] private InputReader inputReader;
 
         private Truck laneSwitcher;
+
+        public void EnterActiveState()
+        {
+            enabled = true;
+        }
+
+        public void ExitActiveState()
+        {
+            enabled = false;
+        }
+
+        public void ResetMe()
+        {
+            enabled = false;
+        }
 
         private void Awake()
         {

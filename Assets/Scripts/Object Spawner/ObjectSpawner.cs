@@ -60,9 +60,11 @@ namespace Daadab
             }
         }
 
-        private void Start()
+        public override void Initialise()
         {
-            ResetMe();
+            base.Initialise();
+            
+            totalSpawnDistance = distanceCalculator.GetPositionAheadOfPlayer(initialSpawnDistance).z;
         }
 
         private void Update()
@@ -103,14 +105,6 @@ namespace Daadab
                 obj.GameObject.SetActive(true);
                 pooledObjects.Add(obj);
             }
-        }
-
-        public override void ResetMe()
-        {
-            base.ResetMe();
-            
-            totalSpawnDistance = distanceCalculator.GetPositionAheadOfPlayer(initialSpawnDistance).z;
-            Debug.Log("Reset object spawner");
         }
 
 

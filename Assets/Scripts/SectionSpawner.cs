@@ -34,8 +34,6 @@ namespace Daadab
         [SerializeField] private List<Section> sections = new();
 
         [Header("Runtime Only")]
-        [SerializeField] private bool initialised;
-
         private DistanceCalculator distanceCalculator;
         public Section LastSection => lastSection;
 
@@ -72,8 +70,10 @@ namespace Daadab
             Assert.IsTrue(sectionCreateDistanceNormalised > 0);
         }
 
-        private void Start()
+        public override void Initialise()
         {
+            base.Initialise();
+
             int counter = 0;
 
             while (counter < sectionAmount && spawnedDistance < distanceCalculator.WorldLength)
@@ -81,8 +81,6 @@ namespace Daadab
                 counter++;
                 ActivateNextSection();
             }
-
-            initialised = true;
         }
 
         private void Update()

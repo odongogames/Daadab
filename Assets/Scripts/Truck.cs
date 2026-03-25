@@ -118,6 +118,7 @@ namespace Daadab
             }
         }
 
+        // TODO: Consider moving water tank to game manager
         public void AddToWaterTank()
         {
             waterTank++;
@@ -137,6 +138,10 @@ namespace Daadab
 
         public void ResetMe()
         {
+            waterTank = 0;
+            disableLaneSwitching = false;
+            RestoreSpeed();
+            lane = Lane.Mid;
             myTransform.position = originalPosition;
         }
 

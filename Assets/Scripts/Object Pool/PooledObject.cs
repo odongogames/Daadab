@@ -41,8 +41,6 @@ namespace Daadab
 
         private void Awake()
         {
-            
-
             myTransform = transform;
 
             originalParent = myTransform.parent;

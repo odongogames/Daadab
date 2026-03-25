@@ -241,7 +241,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c82a0aa28c787ba4a826e9531c275da0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.ObjectSpawner
-  activeGameState: 0
+  activeGameState: 1
+  initialised: 0
   registry: {fileID: 11400000, guid: 37951ff139cdb6841b014164fd417816, type: 2}
   objectHolder: {fileID: 301104656}
   spawnAheadDistance: 80
@@ -554,6 +555,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a8585954f3e1474e95cd252a8ff4363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.FollowTransform
+  activeGameState: 1
+  initialised: 0
   target: {fileID: 2074224333}
   offset: {x: 0, y: 0, z: 0}
   xPositionMultiplier: 0.5
@@ -603,6 +606,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a8585954f3e1474e95cd252a8ff4363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.FollowTransform
+  activeGameState: 1
+  initialised: 0
   target: {fileID: 2074224333}
   offset: {x: 0, y: 0, z: 0}
   xPositionMultiplier: 0
@@ -1377,6 +1382,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a8585954f3e1474e95cd252a8ff4363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.FollowTransform
+  activeGameState: 1
+  initialised: 0
   target: {fileID: 2074224333}
   offset: {x: 0, y: 0, z: 0}
   xPositionMultiplier: 0
@@ -1683,6 +1690,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.LevelComposer
   activeGameState: 1
+  initialised: 0
   spawnedDistance: 0
   sectionSpawnCounter: 0
   sectionHolder: {fileID: 838960731}
@@ -1692,7 +1700,6 @@ MonoBehaviour:
   lastSection: {fileID: 665811154}
   sections:
   - {fileID: 665811154}
-  initialised: 0
 --- !u!1 &951619460
 GameObject:
   m_ObjectHideFlags: 0
@@ -2055,6 +2062,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.DistanceCalculator
   activeGameState: 1
+  initialised: 0
   worldStart: {fileID: 1709489711}
   worldEnd: {fileID: 1834042609}
   playerTransform: {fileID: 0}

@@ -32,12 +32,14 @@ namespace Daadab
 
             truck.OnAddToWaterTank += Truck_OnAddToWaterTank;
 
-            UpdateValues(0);
+            GameManager.OnStartGame += GameManager_OnStartGame;
         }
 
         private void OnDestroy()
         {
             truck.OnAddToWaterTank -= Truck_OnAddToWaterTank;
+
+            GameManager.OnStartGame -= GameManager_OnStartGame;
         }
 
         private void Truck_OnAddToWaterTank(uint value)
@@ -46,6 +48,11 @@ namespace Daadab
             UpdateValues(value);
         }
 
+        private void GameManager_OnStartGame()
+        {
+            UpdateValues(0);
+        }
+        
         private void UpdateValues(uint value)
         {
             text.text = $"{value: 00}%";

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -11,6 +12,7 @@ namespace Daadab
         private GameStateMachine gameStateMachine;
 
         public static Action OnResetGame;
+        public static Action OnStartGame;
 
         private void Awake()
         {
@@ -39,6 +41,8 @@ namespace Daadab
             Assert.IsNotNull(playerHealth);
 
             playerHealth.OnTakeDamage += Player_OnTakeDamage;
+
+            StartCoroutine(StartGameCO());
         }
 
         private void OnDestroy()
@@ -50,9 +54,18 @@ namespace Daadab
         {
             if (value <= 0)
             {
-                Debug.Log($"Player is dead");
                 gameStateMachine.ChangeGameState(GameState.GameOver);
             }
+        }
+
+        private IEnumerator StartGameCO()
+        {
+            yield return new WaitForEndOfFrame();
+
+            Debug.Log("-----------------------");
+            Debug.Log("Start game");
+
+            OnStartGame?.Invoke();
         }
 
         public void RestartGame()
@@ -60,6 +73,8 @@ namespace Daadab
             Debug.Log("-----------------------");
             Debug.Log("Try restart game");
             OnResetGame?.Invoke();
+
+            StartCoroutine(StartGameCO());
         }
     }
 }

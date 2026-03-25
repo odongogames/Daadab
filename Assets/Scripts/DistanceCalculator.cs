@@ -34,6 +34,12 @@ namespace Daadab
 
             base.Awake();
 
+            var truck = Truck.Instance;
+            Assert.IsNotNull(truck);
+
+            playerTransform = truck.transform;
+            Assert.IsNotNull(playerTransform);
+
             Assert.IsNotNull(worldStart);
             Assert.IsNotNull(worldEnd);
 
@@ -44,12 +50,6 @@ namespace Daadab
 
         private void Start()
         {
-            var truck = Truck.Instance;
-            Assert.IsNotNull(truck);
-
-            playerTransform = truck.transform;
-            Assert.IsNotNull(playerTransform);
-
             sectionSpawner = SectionSpawner.Instance;
             Assert.IsNotNull(sectionSpawner);
         }

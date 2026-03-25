@@ -3,7 +3,7 @@ using Daadab;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class Health : MonoBehaviour, IDamageable
+public class Health : MonoBehaviour, IDamageable, IUnitComponent
 {
     public uint Defense { get; set; }
     public uint CurrentHealth { get; set; }
@@ -81,5 +81,18 @@ public class Health : MonoBehaviour, IDamageable
             Debug.Log($"{name} change health to {CurrentHealth}");
         }
 
+    }
+
+    public void EnterActiveState()
+    {
+    }
+
+    public void ExitActiveState()
+    {
+    }
+
+    public void ResetMe()
+    {
+        RestoreHealth();
     }
 }

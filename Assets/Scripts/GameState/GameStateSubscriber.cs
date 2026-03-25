@@ -10,6 +10,7 @@ namespace Daadab
     public class GameStateSubscriber : MonoBehaviour
     {
         [SerializeField] protected GameState activeGameState;
+        [SerializeField] protected bool initialised;
 
         protected GameStateMachine gameStateMachine;
 
@@ -27,6 +28,7 @@ namespace Daadab
 
             gameStateMachine.AddGameStateSubscriber(this);
 
+            GameManager.OnStartGame += Initialise;
             GameManager.OnResetGame += ResetMe;
         }
 
@@ -34,7 +36,13 @@ namespace Daadab
         {
             gameStateMachine.RemoveGameStateSubscriber(this);
 
+            GameManager.OnStartGame -= Initialise;
             GameManager.OnResetGame -= ResetMe;
+        }
+
+        public virtual void Initialise()
+        {
+            initialised = true;
         }
 
 
@@ -50,6 +58,7 @@ namespace Daadab
 
         public virtual void ResetMe()
         {
+            initialised = false;
         }
 
         protected bool IsInActiveGameState()

@@ -43,10 +43,24 @@ namespace Daadab
             {
                 controller.SetStateMachine(this);
             }
+
+            GameManager.OnStartGame += GameManager_OnStartGame;
         }
 
-        private void Start()
+        private void OnDestroy()
         {
+            GameManager.OnStartGame -= GameManager_OnStartGame;
+        }
+
+        private void GameManager_OnStartGame()
+        {
+            StartCoroutine(InitialiseCO());
+        }
+
+        private IEnumerator InitialiseCO()
+        {
+            yield return null;
+            
             Debug.Log($"Initialise state machine:{initialGameState}");
 
             ChangeGameState(initialGameState);
