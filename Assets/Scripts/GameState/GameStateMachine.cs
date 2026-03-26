@@ -1,9 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Daadab
 {
@@ -11,6 +10,7 @@ namespace Daadab
     {
         public static GameStateMachine Instance;
 
+        [SerializeField] private bool startAutomatically;
         [SerializeField] private GameState initialGameState;
 
         [Header("Runtime Only")]
@@ -44,7 +44,14 @@ namespace Daadab
                 controller.SetStateMachine(this);
             }
 
-            GameManager.OnStartGame += GameManager_OnStartGame;
+            if (startAutomatically)
+            {
+                StartCoroutine(InitialiseCO());
+            }
+            else
+            {
+                GameManager.OnStartGame += GameManager_OnStartGame;
+            }
         }
 
         private void OnDestroy()
@@ -59,7 +66,7 @@ namespace Daadab
 
         private IEnumerator InitialiseCO()
         {
-            yield return null;
+            yield return new WaitForEndOfFrame();
             
             Debug.Log($"Initialise state machine:{initialGameState}");
 

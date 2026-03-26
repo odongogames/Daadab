@@ -10,5 +10,7 @@ namespace Daadab
         Gameplay = 1,
         Pause = 2,
         GameOver = 3,
+        MainMenu = 4,
+        Cutscene = 5,
     }
 }
