@@ -352,6 +352,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Truck
       objectReference: {fileID: 0}
+    - target: {fileID: 2390530321262961605, guid: 01370e56798965c47812858dc3379899, type: 3}
+      propertyPath: m_TagString
+      value: Truck
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -380,6 +384,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2390530321262961605, guid: 01370e56798965c47812858dc3379899, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6436303397950793327}
+    - targetCorrespondingSourceObject: {fileID: 2390530321262961605, guid: 01370e56798965c47812858dc3379899, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1466759059465036539}
   m_SourcePrefab: {fileID: 100100000, guid: 01370e56798965c47812858dc3379899, type: 3}
 --- !u!1 &1531766362626961360 stripped
 GameObject:
@@ -459,12 +466,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28ff891b3950b454f9e49af65298b390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.LaneSwitcher
-  registry: {fileID: 11400000, guid: 37951ff139cdb6841b014164fd417816, type: 2}
   xSpeed: 1
   zSpeed: 10
   moveTimeout: 0
   lane: 0
-  waterTank: 0
   direction: 0
   disableLaneSwitching: 0
 --- !u!114 &2044972276894945106
@@ -506,11 +511,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.SpeedBooster
   maxBoostCount: 3
-  boostDuration: 0
   boostDurationShort: 1.5
   boostDurationMedium: 3
   boostDurationLong: 6
+  boostDuration: 0
   boostCount: 0
+--- !u!114 &1466759059465036539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531766362626961360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16fdd50d3125ec84986144814b4663fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Daadab.WaterTank
+  waterTank: 0
 --- !u!4 &4147305342086422009 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1000647877016179180, guid: 01370e56798965c47812858dc3379899, type: 3}

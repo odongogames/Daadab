@@ -13,14 +13,14 @@ namespace Daadab
             
             SpeedBooster.OnAddBoost += SpeedBooster_OnAddBoost;
             SpeedBooster.OnStartBoost += SpeedBooster_OnStartBoost;
-            GameManager.OnStartGame += GameManager_OnStartGame;
+            GameManager.OnSetupGame += GameManager_OnSetupGame;
         }
 
         private void OnDestroy()
         {
             SpeedBooster.OnAddBoost -= SpeedBooster_OnAddBoost;
             SpeedBooster.OnStartBoost -= SpeedBooster_OnStartBoost;
-            GameManager.OnStartGame -= GameManager_OnStartGame;
+            GameManager.OnSetupGame -= GameManager_OnSetupGame;
         }
 
         private void SpeedBooster_OnAddBoost(uint count)
@@ -31,7 +31,7 @@ namespace Daadab
             }
         }
 
-        private void GameManager_OnStartGame()
+        private void GameManager_OnSetupGame()
         {
             ResetMe();
         }

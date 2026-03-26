@@ -9,7 +9,6 @@ namespace Daadab
     public class Truck : MonoBehaviour, IUnitComponent
     {
         public static Truck Instance;
-        [SerializeField] private Registry registry;
 
         [Header("Movement")]
         [SerializeField] private float xSpeed;
@@ -19,7 +18,6 @@ namespace Daadab
         [SerializeField] private Lane lane;
 
         [Header("Runtime only")]
-        [SerializeField] private uint waterTank;
         [SerializeField][Range(-1, 1)] private int direction;
         [SerializeField] private bool disableLaneSwitching;
 
@@ -36,9 +34,10 @@ namespace Daadab
 
         private Transform myTransform;
         private SpeedBooster booster;
+        private WaterTank waterTank;
         private SFXPlayer SFXPlayer;
+        private Registry registry;
 
-        public Action<uint> OnAddToWaterTank;
 
         public bool IsBoosting() => booster.IsBoosting();
 
@@ -53,6 +52,9 @@ namespace Daadab
 
             Instance = this;
 
+            registry = Registry.Instance;
+            Assert.IsNotNull(registry);
+
             myTransform = transform;
             originalPosition = myTransform.position;
 
@@ -60,6 +62,9 @@ namespace Daadab
 
             booster = GetComponent<SpeedBooster>();
             Assert.IsNotNull(booster);
+
+            waterTank = GetComponent<WaterTank>();
+            Assert.IsNotNull(waterTank);
 
             zSpeedOriginal = zSpeed;
             zSpeedReduced = zSpeed / 2;
@@ -131,14 +136,6 @@ namespace Daadab
             }
         }
 
-        // TODO: Consider moving water tank to another component
-        public void AddToWaterTank()
-        {
-            waterTank++;
-            Debug.Log($"Add to watertank: {waterTank}");
-            OnAddToWaterTank?.Invoke(waterTank);
-        }
-
         public void EnterActiveState()
         {
             enabled = true;
@@ -151,7 +148,6 @@ namespace Daadab
 
         public void ResetMe()
         {
-            waterTank = 0;
             disableLaneSwitching = false;
             RestoreSpeed();
             lane = Lane.Mid;
@@ -185,6 +181,11 @@ namespace Daadab
         public void AddBoost()
         {
             booster.AddBoost();
+        }
+
+        public void AddToWaterTank()
+        {
+            waterTank.AddToWaterTank();
         }
     }
 }

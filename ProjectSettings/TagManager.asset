@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SectionRemover
   - PooledObjectRemover
+  - Truck
   layers:
   - Default
   - TransparentFX

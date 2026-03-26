@@ -12,5 +12,6 @@ namespace Daadab
         GameOver = 3,
         MainMenu = 4,
         Cutscene = 5,
+        MissionComplete = 6
     }
 }

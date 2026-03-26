@@ -12,7 +12,9 @@ namespace Daadab
         private GameStateMachine gameStateMachine;
 
         public static Action OnResetGame;
+        public static Action OnSetupGame;
         public static Action OnStartGame;
+        public static Action OnFinishGame;
 
         private float gameTime;
         public float GetGameTime() => gameTime;
@@ -28,8 +30,10 @@ namespace Daadab
 
             Instance = this;
 
+#if !UNITY_EDITOR
             // didable fog while editing to improve visibility
             RenderSettings.fog = true;
+#endif
         }
 
         private void Start()
@@ -45,7 +49,7 @@ namespace Daadab
 
             playerHealth.OnTakeDamage += Player_OnTakeDamage;
 
-            StartCoroutine(StartGameCO());
+            StartCoroutine(SetupGameCO());
         }
 
         private void Update()
@@ -69,6 +73,18 @@ namespace Daadab
             }
         }
 
+        private IEnumerator SetupGameCO()
+        {
+            yield return new WaitForEndOfFrame();
+
+            Debug.Log("-----------------------");
+            Debug.Log("Setup game");
+
+            OnSetupGame?.Invoke();
+
+            StartCoroutine(StartGameCO());
+        }
+
         private IEnumerator StartGameCO()
         {
             yield return new WaitForEndOfFrame();
@@ -85,7 +101,26 @@ namespace Daadab
             Debug.Log("Try restart game");
             OnResetGame?.Invoke();
 
-            StartCoroutine(StartGameCO());
+            StartCoroutine(SetupGameCO());
         }
+
+        public void FinishGame()
+        {
+            Debug.Log("Player has finished game");
+            OnFinishGame?.Invoke();
+
+            StartCoroutine(FinishGameCO());
+        }
+
+         private IEnumerator FinishGameCO()
+        {
+            yield return new WaitForSeconds(1);
+
+            Debug.Log("Mission complete");
+            Debug.Log("-----------------------");
+
+            gameStateMachine.ChangeGameState(GameState.MissionComplete);
+        }
+
     }
 }

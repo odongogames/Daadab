@@ -28,7 +28,7 @@ namespace Daadab
 
             gameStateMachine.AddGameStateSubscriber(this);
 
-            GameManager.OnStartGame += Initialise;
+            GameManager.OnSetupGame += Initialise;
             GameManager.OnResetGame += ResetMe;
         }
 
@@ -36,7 +36,7 @@ namespace Daadab
         {
             gameStateMachine.RemoveGameStateSubscriber(this);
 
-            GameManager.OnStartGame -= Initialise;
+            GameManager.OnSetupGame -= Initialise;
             GameManager.OnResetGame -= ResetMe;
         }
 

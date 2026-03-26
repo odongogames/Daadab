@@ -6,12 +6,22 @@ namespace Daadab
     [CreateAssetMenu(menuName = "Scriptable Objects/Registry")]
     public class Registry : MyScriptableObject
     {
+        public static Registry Instance;
+
+        /// <summary>
+        /// What is the number of water droplets that will be spawned for this mission?
+        /// </summary>
+        [SerializeField] private uint totalWaterCount;
+        public uint TotalWaterCount => totalWaterCount;
+
+        public void SetTotalWaterCount(uint count) => totalWaterCount = count;
+
         /// <summary>
         /// Distance between each lane on the x-axis
         /// </summary>
         [SerializeField][Range(0, 6)] private float laneDistance = 3;
         public float LaneDistance => laneDistance;
-        
+
         [SerializeField] private uint objectSequenceLength = 60;
         public float ObjectSequenceLength => objectSequenceLength;
 
@@ -23,5 +33,25 @@ namespace Daadab
 
         [SerializeField] private float backwardsCurveStrength;
         public float BackwardsCurveStrength => backwardsCurveStrength;
+
+        public override void OnValidate()
+        {
+            base.OnValidate();
+
+            Initialise();
+        }
+
+        private void OEnable()
+        {
+            Initialise();
+        }
+
+        private void Initialise()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+        }
     }
 }

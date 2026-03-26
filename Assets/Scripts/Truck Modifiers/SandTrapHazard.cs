@@ -12,8 +12,6 @@ namespace Daadab
                 Debug.Log($"{name} cannot modify truck it's boosting");
                 return;
             }
-            
-            base.ModifyTruck(truck);
 
             truck.ReduceSpeed();
         }

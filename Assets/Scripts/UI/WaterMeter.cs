@@ -11,8 +11,9 @@ namespace Daadab
         [SerializeField] private Image waterDrop;
         [SerializeField] private TextMeshProUGUI text;
         [SerializeField] [Range(0,1)] private float waterTankFillAmountNormalised;
-        
-        private Truck truck;
+
+        private Registry registry;
+        private WaterTank waterTank;
         private Animator animator;
 
         private int growHash;
@@ -22,22 +23,31 @@ namespace Daadab
             animator = GetComponent<Animator>();
             Assert.IsNotNull(animator);
 
+            registry = Registry.Instance;
+            Assert.IsNotNull(registry);
+
             growHash = Animator.StringToHash("grow");
         }
 
         private void Start()
         {
-            truck = Truck.Instance;
+            registry = RegistryInstance.Instance.Registry;
+            Assert.IsNotNull(registry);
+
+            var truck = Truck.Instance;
             Assert.IsNotNull(truck);
 
-            truck.OnAddToWaterTank += Truck_OnAddToWaterTank;
+            waterTank = truck.GetComponent<WaterTank>();
+            Assert.IsNotNull(waterTank);
+
+            waterTank.OnAddToWaterTank += Truck_OnAddToWaterTank;
 
             GameManager.OnStartGame += GameManager_OnStartGame;
         }
 
         private void OnDestroy()
         {
-            truck.OnAddToWaterTank -= Truck_OnAddToWaterTank;
+            waterTank.OnAddToWaterTank -= Truck_OnAddToWaterTank;
 
             GameManager.OnStartGame -= GameManager_OnStartGame;
         }
@@ -55,9 +65,10 @@ namespace Daadab
         
         private void UpdateValues(uint value)
         {
-            text.text = $"{value: 00}%";
+            var fillAmount = value / (float) registry.TotalWaterCount;
+            text.text = $"{fillAmount * 100: 00}%";
 
-            waterTankFillAmountNormalised = value / 100f;
+            waterTankFillAmountNormalised = fillAmount;
             waterDrop.fillAmount = waterTankFillAmountNormalised;
         }
     }

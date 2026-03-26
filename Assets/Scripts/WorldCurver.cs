@@ -19,7 +19,7 @@ namespace Daadab
 //         private static float backwardsStrengthStatic;
 // #endif
 
-        [SerializeField] private Registry registry;
+        private Registry registry;
 
         //         private void OnValidate()
         //         {
@@ -31,6 +31,7 @@ namespace Daadab
 
         private void Awake()
         {
+            registry = Registry.Instance;
             Assert.IsNotNull(registry);
         }
 

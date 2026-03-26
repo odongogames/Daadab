@@ -7,8 +7,13 @@ namespace Daadab
 {
     public class ObjectSpawner : GameStateSubscriber
     {
-        [SerializeField] private Registry registry;
+        [SerializeField] private GameObject finalObject;
         [SerializeField] private Transform objectHolder;
+        // TODO: Consider moving to registry
+        /// <summary>
+        /// How many object sequences do we spawn in total?
+        /// </summary>
+        [SerializeField] private uint totalObjectSequenceCount = 12;
         /// <summary>
         /// How far in front of the player do we need to spawn objects?
         /// </summary>
@@ -19,17 +24,19 @@ namespace Daadab
         /// </summary>
         [SerializeField] private float initialSpawnDistance = 20;
         [SerializeField] private PooledObjectSequence[] objectSequences;
+        [SerializeField] private List<PooledObjectSequence> finalObjectSequence = new();
 
         [Header("Runtime Only")]
         [SerializeField] private PooledObjectSequence currentObjectSequence;
-        [SerializeField] private List<PooledObject> pooledObjects = new();
         [SerializeField] private List<PooledObjectCount> objectCounts = new();
+        [SerializeField] private List<PooledObjectCount> finalObjectCounts = new();
 
         private float desiredSpawnDistance;
         private float totalSpawnDistance;
         private float lastSpawnPosition;
         private int objectSequenceSpawnCount;
-
+        
+        private Registry registry;
         private ObjectPool objectPool;
         private DistanceCalculator distanceCalculator;
 
@@ -37,6 +44,7 @@ namespace Daadab
         {
             base.Awake();
 
+            registry = Registry.Instance;
             Assert.IsNotNull(registry);
 
             distanceCalculator = DistanceCalculator.Instance;
@@ -46,6 +54,7 @@ namespace Daadab
             Assert.IsNotNull(objectPool);
 
             Assert.IsNotNull(objectHolder);
+            Assert.IsNotNull(finalObject);
 
             Assert.IsTrue(objectSequences.Length > 0);
 
@@ -63,15 +72,33 @@ namespace Daadab
         public override void Initialise()
         {
             base.Initialise();
+
+            finalObjectSequence.Clear();
             
+            for (int i = 0; i < totalObjectSequenceCount; i++)
+            {
+                finalObjectSequence.Add(objectSequences[UnityEngine.Random.Range(0, objectSequences.Length)]);
+            }
+            CountPooledObjectsFromFinalObjectSequences();
+
+            finalObject.transform.position = Vector2.zero;
+            finalObject.SetActive(false);
             totalSpawnDistance = distanceCalculator.GetPositionAheadOfPlayer(initialSpawnDistance).z;
+
+            foreach (var count in finalObjectCounts)
+            {
+                if (string.Equals(count.PooledObject.name, "water", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    registry.SetTotalWaterCount(count.Count);
+                }
+            }
         }
 
         private void Update()
         {
             desiredSpawnDistance = distanceCalculator.GetPositionAheadOfPlayer(spawnAheadDistance).z;
 
-            while (totalSpawnDistance < desiredSpawnDistance)
+            while (!HasFinishedSpawningObjectSequences() && totalSpawnDistance < desiredSpawnDistance)
             {
                 SpawnObjects();
             }
@@ -79,13 +106,36 @@ namespace Daadab
 
         public void SpawnObjects()
         {
-            currentObjectSequence = objectSequences[UnityEngine.Random.Range(0, objectSequences.Length)];
+            currentObjectSequence = finalObjectSequence[objectSequenceSpawnCount];
 
             SpawnLane(currentObjectSequence.LeftLaneHolder, objectHolder);
             SpawnLane(currentObjectSequence.MidLaneHolder, objectHolder);
             SpawnLane(currentObjectSequence.RightLaneHolder, objectHolder);
 
             totalSpawnDistance += registry.ObjectSequenceLength;
+
+            objectSequenceSpawnCount++;
+
+            if (HasFinishedSpawningObjectSequences())
+            {
+                SpawnFinalObject();
+            }
+        }
+
+        private void SpawnFinalObject()
+        {
+            Debug.Log("Spawn final object");
+            
+            var position = Vector3.zero;
+            position.z += totalSpawnDistance;
+            finalObject.transform.position = position;
+
+            finalObject.SetActive(true);
+        }
+
+        private bool HasFinishedSpawningObjectSequences()
+        {
+            return objectSequenceSpawnCount >= totalObjectSequenceCount;
         }
 
         private void SpawnLane(Transform source, Transform laneHolder)
@@ -95,7 +145,7 @@ namespace Daadab
                 // var unit = Instantiate(data.UnitVariable.GetValue(), laneHolder);
                 var obj = objectPool.GetPooledObject(child.name);
                 Assert.IsNotNull(obj);
-                
+
                 // obj.Transform.SetParent(laneHolder);
                 var position = child.localPosition + source.localPosition;
                 position.z += totalSpawnDistance;
@@ -103,22 +153,30 @@ namespace Daadab
 
                 obj.Transform.localRotation = child.localRotation;
                 obj.GameObject.SetActive(true);
-                pooledObjects.Add(obj);
             }
         }
-
 
         private void CountPooledObjectsFromObjectSequences()
         {
             foreach (var sequence in objectSequences)
             {
-                CountPooledObjectsFromTransform(sequence.LeftLaneHolder);
-                CountPooledObjectsFromTransform(sequence.MidLaneHolder);
-                CountPooledObjectsFromTransform(sequence.RightLaneHolder);
+                CountPooledObjectsFromTransform(sequence.LeftLaneHolder, objectCounts);
+                CountPooledObjectsFromTransform(sequence.MidLaneHolder, objectCounts);
+                CountPooledObjectsFromTransform(sequence.RightLaneHolder, objectCounts);
             }
         }
 
-        private void CountPooledObjectsFromTransform(Transform trans)
+        private void CountPooledObjectsFromFinalObjectSequences()
+        {
+            foreach (var sequence in finalObjectSequence)
+            {
+                CountPooledObjectsFromTransform(sequence.LeftLaneHolder, finalObjectCounts);
+                CountPooledObjectsFromTransform(sequence.MidLaneHolder, finalObjectCounts);
+                CountPooledObjectsFromTransform(sequence.RightLaneHolder, finalObjectCounts);
+            }
+        }
+
+        private void CountPooledObjectsFromTransform(Transform trans, List<PooledObjectCount> countList)
         {
             foreach (Transform child in trans)
             {
@@ -131,18 +189,18 @@ namespace Daadab
 
                 bool found = false;
 
-                for (int i = 0; i < objectCounts.Count; i++)
+                for (int i = 0; i < countList.Count; i++)
                 {
-                    if (string.Equals(objectCounts[i].PooledObject.name, pooledObject.name, StringComparison.CurrentCultureIgnoreCase))
+                    if (string.Equals(countList[i].PooledObject.name, pooledObject.name, StringComparison.CurrentCultureIgnoreCase))
                     {
-                        objectCounts[i].Count++;
+                        countList[i].Count++;
                         found = true;
                     }
                 }
 
                 if (!found)
                 {
-                    objectCounts.Add(new PooledObjectCount
+                    countList.Add(new PooledObjectCount
                     {
                         PooledObject = pooledObject,
                         Count = 1

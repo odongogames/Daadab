@@ -1140,7 +1140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4919529952056294822, guid: 5ae9ac4646ba824449e9fb8be6ef3d17, type: 3}
       propertyPath: activeGameState
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5620117385345058029, guid: 5ae9ac4646ba824449e9fb8be6ef3d17, type: 3}
       propertyPath: m_Color.a

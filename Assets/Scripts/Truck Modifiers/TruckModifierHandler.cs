@@ -71,12 +71,12 @@ namespace Daadab
                     }
                 }
 
+                modifier.GetModifier().ModifyTruck(truck);
+
                 if (modifier.GetModifier().GetAudio() != null)
                 {
                     SFXPlayer.PlayClip(modifier.GetModifier().GetAudio());
                 }
-
-                modifier.GetModifier().ModifyTruck(truck);
 
                 if (modifier.GetModifier().GetLifeTime() > 0)
                 {
@@ -88,7 +88,7 @@ namespace Daadab
                     });
                 }
 
-                if (modifier.GetModifier().DisableOnUse())
+                if (truck.IsBoosting() || modifier.GetModifier().DisableOnUse())
                 {
                     modifier.gameObject.SetActive(false);
                 }
