@@ -22,10 +22,11 @@ namespace Daadab
         private int noOfSubstrings;
         public int GetNumberOfSubstrings() => noOfSubstrings;
 
+        private string fullString;
         private float charRevealTimeout = 0.03f;
         private int charRevealIndex;
         private bool isRevealingText;
-        public bool IsRevealingText() => isRevealingText;
+        public bool IsRevealingText => isRevealingText;
 
         public static Action HasFinishedRevealingText;
 
@@ -42,18 +43,21 @@ namespace Daadab
             pauseCharArray[1] = '!';
         }
 
-        public void UpdateText(string str, bool letterByLetter = false)
+        public void FinishRevealingText()
         {
             // if we're in the middle of revealing the text, just show it all immediately
             if (isRevealingText)
             {
                 isRevealingText = false;
                 StopAllCoroutines();
-                UpdateText(str);
-                return;
+                UpdateText(fullString);
             }
+        }
 
+        public void UpdateText(string str, bool letterByLetter = false)
+        {
             text.text = "";
+            fullString = str;
 
             substrings = str.Split('^');
             noOfSubstrings = substrings.Length;

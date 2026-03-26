@@ -9,7 +9,7 @@ namespace Daadab
         {
             base.CompleteResponse();
 
-            GameManager.Instance.StartTutorial();
+            GameStateMachine.Instance.ChangeGameState(GameState.Tutorial);
         }
     }
 }

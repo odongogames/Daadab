@@ -3,13 +3,14 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
+using DG.Tweening;
 
 namespace Daadab
 {
     public class TextSequenceRunner : GameStateSubscriber
     {
         public static TextSequenceRunner Instance;
-     
+
         [SerializeField] private TextSequence introTextSequence;
         [SerializeField] private TextSequence outroTextSequence;
         [SerializeField] private TextInstance textInstanceTemplate;
@@ -19,13 +20,22 @@ namespace Daadab
 
 
         [Header("Runtime Only")]
+        [SerializeField] private TextInstance activeText;
         [SerializeField] private TextSequence textSequence;
+        [SerializeField] private TextSequenceItem yesResponse;
+        [SerializeField] private TextSequenceItem noResponse;
+        [SerializeField] private float speechHolderPositionY;
+        [SerializeField] private float origSpeechHolderPositionY;
 
         private int textIndex;
-        
+
         private float lineHeight = 70;
         private float padding = 100;
 
+        private RectTransform tutorialYesButtonRectTransform;
+        private RectTransform tutorialNoButtonRectTransform;
+
+        private InputReader inputReader;
         PlayerInputActions inputActions;
 
         public override void Awake()
@@ -43,12 +53,29 @@ namespace Daadab
             Assert.IsNotNull(outroTextSequence);
             Assert.IsNotNull(textHolder);
 
+            origSpeechHolderPositionY = textHolder.anchoredPosition.y;
+
             Assert.IsNotNull(tutorialYesButton);
             Assert.IsNotNull(tutorialNoButton);
+
+            tutorialNoButton.SetActive(false);
+            tutorialYesButton.SetActive(false);
+
+            tutorialYesButtonRectTransform = tutorialYesButton.GetComponent<RectTransform>();
+            tutorialNoButtonRectTransform = tutorialNoButton.GetComponent<RectTransform>();
+
+            Assert.IsNotNull(tutorialYesButtonRectTransform);
+            Assert.IsNotNull(tutorialNoButtonRectTransform);
 
             Instance = this;
 
             GameManager.OnFinishGame += GameManager_OnFinishGame;
+        }
+
+        private void Start()
+        {
+            inputReader = InputReader.Instance;
+            Assert.IsNotNull(inputReader);
         }
 
         public override void OnDestroy()
@@ -58,69 +85,76 @@ namespace Daadab
             GameManager.OnFinishGame -= GameManager_OnFinishGame;
         }
 
-        private void GameManager_OnSetupGame()
-        {
-            textSequence = introTextSequence;
-        }
-        
         private void GameManager_OnFinishGame()
         {
             textSequence = outroTextSequence;
+            ResetTextHolderPosition();
+        }
+
+        private void Update()
+        {
+            if (!enabled) return;
+
+            if (inputReader.StartEnter()) ShowNextText();
+
+            if (inputReader.StartMouseClick()) ShowNextText();
+
+            if (inputReader.StartEscape()) FinishTextSequence();
         }
 
         public override void EnterActiveState()
         {
             base.EnterActiveState();
 
-            if (inputActions == null)
-            {
-                inputActions = new PlayerInputActions();
-                inputActions.Enable();
-                // inputActions.Player.SetCallbacks(this);
-
-                InputSystem.onAnyButtonPress.Call(ctx => OnAnyKeyPress());
-            }
-
             RunTextSequence();
-        }
-
-        public override void ExitActiveState()
-        {
-            base.ExitActiveState();
-
-            if (inputActions != null)
-            {
-                // InputSystem.onAnyButtonPress.Remove(OnAnyKeyPress);
-                inputActions.Disable();
-            }
         }
 
         public void SetIntroTextSequence()
         {
             textSequence = introTextSequence;
+            ResetTextHolderPosition();
         }
 
-        private void OnAnyKeyPress()
+        private void ResetTextHolderPosition()
         {
-            ShowNextText();
+            speechHolderPositionY = origSpeechHolderPositionY;
+            textHolder.anchoredPosition = new Vector2(
+                textHolder.anchoredPosition.x,
+                textHolder.anchoredPosition.y
+            );
         }
 
         public void RunTextSequence()
         {
-            Debug.Log("Run text sequence");
-            
+            Assert.IsNotNull(textSequence.finishSequenceResponse);
+
+            Debug.Log($"Run text sequence: {textSequence.name}");
+
             textIndex = -1;
 
             ShowNextText();
         }
 
-        private void ShowNextText()
+        public void ShowNextText()
         {
+            if (activeText && activeText.Text.IsRevealingText)
+            {
+                activeText.Text.FinishRevealingText();
+                return;
+            }
+
             textIndex++;
+
+            Debug.Log($"Show text: {textIndex}");
 
             if (textIndex >= textSequence.texts.Length)
             {
                 Debug.Log("End of texts reached");
+
+                if (noResponse == null && yesResponse == null)
+                {
+                    FinishTextSequence();
+                }
                 return;
             }
 
@@ -135,17 +169,37 @@ namespace Daadab
 
             text.Activate(textSequence.texts[textIndex].text, height);
 
+            activeText = text;
+
             if (textIndex > 0)
             {
                 height += 50;
             }
 
-            textHolder.anchoredPosition += new Vector2(0, height);
+            speechHolderPositionY += height;
 
-            if (textSequence.texts[textIndex].yesResponse && textSequence.texts[textIndex].noResponse)
+            textHolder.DOKill();
+
+            textHolder.DOAnchorPosY(speechHolderPositionY, .5f);
+
+            // textHolder.anchoredPosition += new Vector2(0, height);
+
+            yesResponse = textSequence.texts[textIndex].yesResponse;
+            noResponse = textSequence.texts[textIndex].noResponse;
+
+            if (yesResponse != null && noResponse != null)
             {
+                tutorialNoButtonRectTransform.localScale = Vector2.zero;
+                tutorialYesButtonRectTransform.localScale = Vector2.zero;
+
                 tutorialNoButton.SetActive(true);
                 tutorialYesButton.SetActive(true);
+
+                tutorialNoButtonRectTransform.DOKill();
+                tutorialYesButtonRectTransform.DOKill();
+
+                tutorialNoButtonRectTransform.DOScale(1, .5f).SetDelay(.5f);
+                tutorialYesButtonRectTransform.DOScale(1, .5f).SetDelay(.5f);
             }
             else
             {
@@ -154,6 +208,23 @@ namespace Daadab
             }
 
             text.gameObject.SetActive(true);
+        }
+
+        public void ChooseYesResponse()
+        {
+            if (yesResponse != null)
+                yesResponse.CompleteResponse();
+        }
+
+        public void ChooseNoResponse()
+        {
+            if (noResponse != null)
+                noResponse.CompleteResponse();
+        }
+
+        private void FinishTextSequence()
+        {
+            textSequence.finishSequenceResponse.CompleteResponse();
         }
     }
 }

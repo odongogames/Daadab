@@ -16,17 +16,12 @@ namespace Daadab
         public static Action OnStartGame;
         public static Action OnFinishGame;
 
-        public static Action OnStartTutorial;
-
         /// <summary>
         /// How many times has the game been run?
         /// </summary>
         private uint runCount;
         public uint RunCount => runCount;
-
-        private bool isShowingTutorial;
-        public bool IsShowingTutorial => isShowingTutorial;
-
+        
         private float gameTime;
         public float GetGameTime() => gameTime;
 
@@ -104,20 +99,6 @@ namespace Daadab
                 gameTime += Time.deltaTime;
             }
         }
-
-        public void StartTutorial()
-        {
-            isShowingTutorial = true;
-            OnStartTutorial?.Invoke();
-            
-            StartCoroutine(SetupGameCO());
-        }
-
-        public void FinishTutorial()
-        {
-            isShowingTutorial = false;
-        }
-
 
         public void FinishIntroSequence()
         {

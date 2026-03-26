@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 namespace Daadab
 {
     
-    public class TutorialNoButton : ButtonBase
+    public class TextSequenceYesButton : ButtonBase
     {
         private GameManager gameManager;
 
@@ -20,7 +20,7 @@ namespace Daadab
         {
             base.OnClick();
 
-            gameManager.FinishIntroSequence();
+            TextSequenceRunner.Instance.ChooseYesResponse();
         }
     }
 }

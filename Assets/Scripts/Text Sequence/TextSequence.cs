@@ -6,5 +6,7 @@ namespace Daadab
     public class TextSequence : MyScriptableObject
     {
         public TextSequenceItem[] texts;
+
+        public TextSequenceItem finishSequenceResponse;
     }
 }

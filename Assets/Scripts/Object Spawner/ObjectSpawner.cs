@@ -29,13 +29,11 @@ namespace Daadab
         [Header("Runtime Only")]
         [SerializeField] private PooledObjectSequence currentObjectSequence;
         [SerializeField] private List<PooledObjectCount> objectCounts = new();
-        [SerializeField] private List<PooledObjectCount> finalObjectCounts = new();
+        [SerializeField] private List<PooledObjectCount> gameplayObjectCounts = new();
 
         private float desiredSpawnDistance;
         private float totalSpawnDistance;
-        private float lastSpawnPosition;
         private int objectSequenceSpawnCount;
-        private int tutorialObjectSequenceSpawnCount;
 
         private GameManager gameManager;
         private Registry registry;
@@ -87,7 +85,9 @@ namespace Daadab
             
             CountPooledObjectsFromGameplayObjectSequences();
 
-            foreach (var count in finalObjectCounts)
+            gameplayObjectCounts.Clear();
+
+            foreach (var count in gameplayObjectCounts)
             {
                 if (string.Equals(count.PooledObject.name, "water", StringComparison.CurrentCultureIgnoreCase))
                 {
@@ -102,8 +102,6 @@ namespace Daadab
 
         private void Update()
         {
-            if (gameManager.IsShowingTutorial) return;
-            
             desiredSpawnDistance = distanceCalculator.GetPositionAheadOfPlayer(spawnAheadDistance).z;
 
             while (!HasFinishedSpawningObjectSequences() && totalSpawnDistance < desiredSpawnDistance)
@@ -178,9 +176,9 @@ namespace Daadab
         {
             foreach (var sequence in gameplayObjectSequenceList)
             {
-                CountPooledObjectsFromTransform(sequence.LeftLaneHolder, finalObjectCounts);
-                CountPooledObjectsFromTransform(sequence.MidLaneHolder, finalObjectCounts);
-                CountPooledObjectsFromTransform(sequence.RightLaneHolder, finalObjectCounts);
+                CountPooledObjectsFromTransform(sequence.LeftLaneHolder, gameplayObjectCounts);
+                CountPooledObjectsFromTransform(sequence.MidLaneHolder, gameplayObjectCounts);
+                CountPooledObjectsFromTransform(sequence.RightLaneHolder, gameplayObjectCounts);
             }
         }
 

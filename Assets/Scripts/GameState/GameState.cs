@@ -13,5 +13,6 @@ namespace Daadab
         MainMenu = 4,
         Cutscene = 5,
         MissionComplete = 6,
+        Tutorial = 7,
     }
 }

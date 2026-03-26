@@ -163,6 +163,7 @@ GameObject:
   - component: {fileID: 4036229876554508663}
   - component: {fileID: 1548412173775462681}
   - component: {fileID: 1985660082868091774}
+  - component: {fileID: 1711875102365716208}
   m_Layer: 5
   m_Name: Speech Bubble (1)
   m_TagString: Untagged
@@ -241,9 +242,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f700f53a50b8d4ea5ff839c99d8757, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.TextInstance
+  canvasGroup: {fileID: 0}
   text: {fileID: 2081720042676922856}
   rectTransform: {fileID: 6055638165925149528}
   arrowTransform: {fileID: 2357813335058298073}
+--- !u!225 &1711875102365716208
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8167030711980831514}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8460445348770668940
 GameObject:
   m_ObjectHideFlags: 0

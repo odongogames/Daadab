@@ -39,6 +39,8 @@ namespace Daadab
 
         private int sectionIndex;
 
+        private GameManager gameManager;
+
         public override void Awake()
         {
             if (Instance != null)
@@ -51,6 +53,10 @@ namespace Daadab
             Instance = this;
 
             base.Awake();
+
+
+            gameManager = GameManager.Instance;
+            Assert.IsNotNull(gameManager);
 
             distanceCalculator = DistanceCalculator.Instance;
             Assert.IsNotNull(distanceCalculator);

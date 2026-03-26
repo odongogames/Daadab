@@ -8,6 +8,7 @@ namespace Daadab
     public class UIScreen : GameStateSubscriber
     {
         [SerializeField] private bool showInstantly;
+        [SerializeField] private bool hideInstantly;
 
         private RectTransform rectTransform;
         private CanvasGroup canvasGroup;
@@ -58,7 +59,11 @@ namespace Daadab
         {
             canvasGroup.DOKill();
 
-            canvasGroup.DOFade(0, fadeTime);
+            if (hideInstantly)
+                canvasGroup.alpha = 0;
+            else
+                canvasGroup.DOFade(0, fadeTime);
+                
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;
         }
