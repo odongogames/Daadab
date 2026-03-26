@@ -6,12 +6,13 @@ namespace Daadab
 {
     public enum GameState
     {
+        StateLess = -1,
         None = 0,
         Gameplay = 1,
         Pause = 2,
         GameOver = 3,
         MainMenu = 4,
-        Cutscene = 5,
+        Conversation = 5,
         MissionComplete = 6,
         Tutorial = 7,
     }

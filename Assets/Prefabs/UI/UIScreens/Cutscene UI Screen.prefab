@@ -599,7 +599,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5620117385345058029, guid: 5ae9ac4646ba824449e9fb8be6ef3d17, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -652,6 +652,7 @@ MonoBehaviour:
   textHolder: {fileID: 2217430267164016237}
   tutorialYesButton: {fileID: 5599258243346378944}
   tutorialNoButton: {fileID: 2846149894472155686}
+  activeText: {fileID: 0}
   textSequence: {fileID: 0}
   yesResponse: {fileID: 0}
   noResponse: {fileID: 0}

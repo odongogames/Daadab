@@ -14,6 +14,7 @@ namespace Daadab
         public static Action OnResetGame;
         public static Action OnSetupGame;
         public static Action OnStartGame;
+        public static Action OnStartIntroConversation;
         public static Action OnFinishGame;
 
         /// <summary>
@@ -63,8 +64,10 @@ namespace Daadab
             if (runCount == 1)
             {
                 TextSequenceRunner.Instance.SetIntroTextSequence();
-                
-                gameStateMachine.ChangeGameState(GameState.Cutscene);
+
+                OnStartIntroConversation?.Invoke();
+
+                gameStateMachine.ChangeGameState(GameState.Conversation);
             }
             else
             {

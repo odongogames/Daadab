@@ -173,7 +173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4919529952056294822, guid: 5ae9ac4646ba824449e9fb8be6ef3d17, type: 3}
       propertyPath: showInstantly
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4919529952056294822, guid: 5ae9ac4646ba824449e9fb8be6ef3d17, type: 3}
       propertyPath: activeGameState

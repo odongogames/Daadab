@@ -34,7 +34,8 @@ namespace Daadab
 
         public virtual void OnDestroy()
         {
-            gameStateMachine.RemoveGameStateSubscriber(this);
+            if(activeGameState != GameState.StateLess)
+                gameStateMachine.RemoveGameStateSubscriber(this);
 
             GameManager.OnSetupGame -= Initialise;
             GameManager.OnResetGame -= ResetMe;

@@ -40,13 +40,13 @@ namespace Daadab
             Hide();
         }
 
-        private void Show()
+        protected void Show(bool instantly = false)
         {
             rectTransform.anchoredPosition = Vector2.zero;
 
             canvasGroup.DOKill();
 
-            if (showInstantly)
+            if (instantly)
                 canvasGroup.alpha = 1;
             else
                 canvasGroup.DOFade(1, fadeTime);
@@ -55,11 +55,11 @@ namespace Daadab
             canvasGroup.blocksRaycasts = true;
         }
 
-        private void Hide()
+        protected void Hide(bool instantly = false)
         {
             canvasGroup.DOKill();
 
-            if (hideInstantly)
+            if (instantly)
                 canvasGroup.alpha = 0;
             else
                 canvasGroup.DOFade(0, fadeTime);
