@@ -23,8 +23,8 @@ namespace Daadab
         /// At what distance do we begin spawning objects?
         /// </summary>
         [SerializeField] private float initialSpawnDistance = 20;
-        [SerializeField] private PooledObjectSequence[] objectSequences;
-        [SerializeField] private List<PooledObjectSequence> finalObjectSequence = new();
+        [SerializeField] private List<PooledObjectSequence> sourceObjectSequenceList= new();
+        [SerializeField] private List<PooledObjectSequence> gameplayObjectSequenceList = new();
 
         [Header("Runtime Only")]
         [SerializeField] private PooledObjectSequence currentObjectSequence;
@@ -35,7 +35,9 @@ namespace Daadab
         private float totalSpawnDistance;
         private float lastSpawnPosition;
         private int objectSequenceSpawnCount;
-        
+        private int tutorialObjectSequenceSpawnCount;
+
+        private GameManager gameManager;
         private Registry registry;
         private ObjectPool objectPool;
         private DistanceCalculator distanceCalculator;
@@ -47,6 +49,9 @@ namespace Daadab
             registry = Registry.Instance;
             Assert.IsNotNull(registry);
 
+            gameManager = GameManager.Instance;
+            Assert.IsNotNull(gameManager);
+
             distanceCalculator = DistanceCalculator.Instance;
             Assert.IsNotNull(distanceCalculator);
 
@@ -56,7 +61,7 @@ namespace Daadab
             Assert.IsNotNull(objectHolder);
             Assert.IsNotNull(finalObject);
 
-            Assert.IsTrue(objectSequences.Length > 0);
+            Assert.IsTrue(sourceObjectSequenceList.Count > 0);
 
             objectPool = ObjectPool.Instance;
 
@@ -73,17 +78,14 @@ namespace Daadab
         {
             base.Initialise();
 
-            finalObjectSequence.Clear();
+            gameplayObjectSequenceList.Clear();
             
             for (int i = 0; i < totalObjectSequenceCount; i++)
             {
-                finalObjectSequence.Add(objectSequences[UnityEngine.Random.Range(0, objectSequences.Length)]);
+                gameplayObjectSequenceList.Add(sourceObjectSequenceList[UnityEngine.Random.Range(0, sourceObjectSequenceList.Count)]);
             }
-            CountPooledObjectsFromFinalObjectSequences();
-
-            finalObject.transform.position = Vector2.zero;
-            finalObject.SetActive(false);
-            totalSpawnDistance = distanceCalculator.GetPositionAheadOfPlayer(initialSpawnDistance).z;
+            
+            CountPooledObjectsFromGameplayObjectSequences();
 
             foreach (var count in finalObjectCounts)
             {
@@ -92,10 +94,16 @@ namespace Daadab
                     registry.SetTotalWaterCount(count.Count);
                 }
             }
+
+            finalObject.transform.position = Vector2.zero;
+            finalObject.SetActive(false);
+            totalSpawnDistance = distanceCalculator.GetPositionAheadOfPlayer(initialSpawnDistance).z;
         }
 
         private void Update()
         {
+            if (gameManager.IsShowingTutorial) return;
+            
             desiredSpawnDistance = distanceCalculator.GetPositionAheadOfPlayer(spawnAheadDistance).z;
 
             while (!HasFinishedSpawningObjectSequences() && totalSpawnDistance < desiredSpawnDistance)
@@ -106,7 +114,7 @@ namespace Daadab
 
         public void SpawnObjects()
         {
-            currentObjectSequence = finalObjectSequence[objectSequenceSpawnCount];
+            currentObjectSequence = gameplayObjectSequenceList[objectSequenceSpawnCount];
 
             SpawnLane(currentObjectSequence.LeftLaneHolder, objectHolder);
             SpawnLane(currentObjectSequence.MidLaneHolder, objectHolder);
@@ -158,7 +166,7 @@ namespace Daadab
 
         private void CountPooledObjectsFromObjectSequences()
         {
-            foreach (var sequence in objectSequences)
+            foreach (var sequence in sourceObjectSequenceList)
             {
                 CountPooledObjectsFromTransform(sequence.LeftLaneHolder, objectCounts);
                 CountPooledObjectsFromTransform(sequence.MidLaneHolder, objectCounts);
@@ -166,9 +174,9 @@ namespace Daadab
             }
         }
 
-        private void CountPooledObjectsFromFinalObjectSequences()
+        private void CountPooledObjectsFromGameplayObjectSequences()
         {
-            foreach (var sequence in finalObjectSequence)
+            foreach (var sequence in gameplayObjectSequenceList)
             {
                 CountPooledObjectsFromTransform(sequence.LeftLaneHolder, finalObjectCounts);
                 CountPooledObjectsFromTransform(sequence.MidLaneHolder, finalObjectCounts);
@@ -210,7 +218,7 @@ namespace Daadab
         }
 
 #if UNITY_EDITOR
-        private void OrawGizmos()
+        private void OnDrawGizmos()
         {
             if (!Application.isPlaying) return;
 

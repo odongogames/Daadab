@@ -16,6 +16,17 @@ namespace Daadab
         public static Action OnStartGame;
         public static Action OnFinishGame;
 
+        public static Action OnStartTutorial;
+
+        /// <summary>
+        /// How many times has the game been run?
+        /// </summary>
+        private uint runCount;
+        public uint RunCount => runCount;
+
+        private bool isShowingTutorial;
+        public bool IsShowingTutorial => isShowingTutorial;
+
         private float gameTime;
         public float GetGameTime() => gameTime;
 
@@ -49,36 +60,27 @@ namespace Daadab
 
             playerHealth.OnTakeDamage += Player_OnTakeDamage;
 
-            StartCoroutine(SetupGameCO());
-        }
+            runCount++;
 
-        private void Update()
-        {
-            if (gameStateMachine.GetCurrentState() == GameState.Gameplay)
+            Debug.Log("-----------------------");
+            Debug.Log($"Init game. Run count: {runCount}");
+
+            if (runCount == 1)
             {
-                gameTime += Time.deltaTime;
+                TextSequenceRunner.Instance.SetIntroTextSequence();
+                
+                gameStateMachine.ChangeGameState(GameState.Cutscene);
             }
-        }
-
-        private void OnDestroy()
-        {
-            playerHealth.OnTakeDamage -= Player_OnTakeDamage;
-        }
-
-        private void Player_OnTakeDamage(uint value)
-        {
-            if (value <= 0)
+            else
             {
-                gameStateMachine.ChangeGameState(GameState.GameOver);
+                StartCoroutine(SetupGameCO());
             }
-        }
 
+        }
+        
         private IEnumerator SetupGameCO()
         {
             yield return new WaitForEndOfFrame();
-
-            Debug.Log("-----------------------");
-            Debug.Log("Setup game");
 
             OnSetupGame?.Invoke();
 
@@ -93,6 +95,46 @@ namespace Daadab
             Debug.Log("Start game");
 
             OnStartGame?.Invoke();
+        }
+
+        private void Update()
+        {
+            if (gameStateMachine.GetCurrentState() == GameState.Gameplay)
+            {
+                gameTime += Time.deltaTime;
+            }
+        }
+
+        public void StartTutorial()
+        {
+            isShowingTutorial = true;
+            OnStartTutorial?.Invoke();
+            
+            StartCoroutine(SetupGameCO());
+        }
+
+        public void FinishTutorial()
+        {
+            isShowingTutorial = false;
+        }
+
+
+        public void FinishIntroSequence()
+        {
+            StartCoroutine(SetupGameCO());
+        }
+
+        private void OnDestroy()
+        {
+            playerHealth.OnTakeDamage -= Player_OnTakeDamage;
+        }
+
+        private void Player_OnTakeDamage(uint value)
+        {
+            if (value <= 0)
+            {
+                gameStateMachine.ChangeGameState(GameState.GameOver);
+            }
         }
 
         public void RestartGame()

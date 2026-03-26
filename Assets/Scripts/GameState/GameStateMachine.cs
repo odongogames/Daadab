@@ -35,8 +35,6 @@ namespace Daadab
 
             Instance = this;
 
-            Assert.IsTrue(initialGameState != GameState.None);
-
             gameStateControllers = new List<GameStateController>(GetComponentsInChildren<GameStateController>());
 
             foreach (var controller in gameStateControllers)
@@ -44,29 +42,46 @@ namespace Daadab
                 controller.SetStateMachine(this);
             }
 
-            if (startAutomatically)
-            {
-                StartCoroutine(InitialiseCO());
-            }
-            else
-            {
-                GameManager.OnStartGame += GameManager_OnStartGame;
-            }
+
+            MainMenuManager.OnStartMainMenu += MainMenuManager_OnStartMainMenu;
+            GameManager.OnStartGame += GameManager_OnStartGame;
         }
 
         private void OnDestroy()
         {
+            MainMenuManager.OnStartMainMenu -= MainMenuManager_OnStartMainMenu;
             GameManager.OnStartGame -= GameManager_OnStartGame;
+        }
+
+        private void MainMenuManager_OnStartMainMenu()
+        {
+            StartCoroutine(InitialiseMainMenuCO());
+        }
+
+        private IEnumerator InitialiseMainMenuCO()
+        {
+            yield return new WaitForEndOfFrame();
+
+            initialGameState = GameState.MainMenu; 
+            
+            Debug.Log($"Initialise state machine:{initialGameState}");
+
+            ChangeGameState(initialGameState);
         }
 
         private void GameManager_OnStartGame()
         {
-            StartCoroutine(InitialiseCO());
+            StartCoroutine(InitialiseGameCO());
         }
 
-        private IEnumerator InitialiseCO()
+        private IEnumerator InitialiseGameCO()
         {
             yield return new WaitForEndOfFrame();
+
+            var gameManager = GameManager.Instance;
+            Assert.IsNotNull(gameManager);
+
+            initialGameState = GameState.Gameplay;
             
             Debug.Log($"Initialise state machine:{initialGameState}");
 

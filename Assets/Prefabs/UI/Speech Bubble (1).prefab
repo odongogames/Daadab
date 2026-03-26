@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6903414937064288568}
   - component: {fileID: 9108242328242012996}
   - component: {fileID: 9190760346514068945}
+  - component: {fileID: 2081720042676922856}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -138,6 +139,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2081720042676922856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3624326630683976271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 339b93bbce271f04ebe6613e3d282bd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Daadab.TypedText
 --- !u!1 &8167030711980831514
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,6 +162,7 @@ GameObject:
   - component: {fileID: 6055638165925149528}
   - component: {fileID: 4036229876554508663}
   - component: {fileID: 1548412173775462681}
+  - component: {fileID: 1985660082868091774}
   m_Layer: 5
   m_Name: Speech Bubble (1)
   m_TagString: Untagged
@@ -172,11 +186,11 @@ RectTransform:
   - {fileID: 2357813335058298073}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -35.5}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1200, y: 400}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &4036229876554508663
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -215,6 +229,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1985660082868091774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8167030711980831514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38f700f53a50b8d4ea5ff839c99d8757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Daadab.TextInstance
+  text: {fileID: 2081720042676922856}
+  rectTransform: {fileID: 6055638165925149528}
+  arrowTransform: {fileID: 2357813335058298073}
 --- !u!1 &8460445348770668940
 GameObject:
   m_ObjectHideFlags: 0

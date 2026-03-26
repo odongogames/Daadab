@@ -7,6 +7,8 @@ namespace Daadab
     [RequireComponent(typeof(CanvasGroup))]
     public class UIScreen : GameStateSubscriber
     {
+        [SerializeField] private bool showInstantly;
+
         private RectTransform rectTransform;
         private CanvasGroup canvasGroup;
 
@@ -41,13 +43,21 @@ namespace Daadab
         {
             rectTransform.anchoredPosition = Vector2.zero;
 
-            canvasGroup.DOFade(1, fadeTime);
+            canvasGroup.DOKill();
+
+            if (showInstantly)
+                canvasGroup.alpha = 1;
+            else
+                canvasGroup.DOFade(1, fadeTime);
+
             canvasGroup.interactable = true;
             canvasGroup.blocksRaycasts = true;
         }
 
         private void Hide()
         {
+            canvasGroup.DOKill();
+
             canvasGroup.DOFade(0, fadeTime);
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;

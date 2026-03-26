@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f82b1a29f4e1c34ba07c74f5b02d0fa, type: 3}
+  m_Name: Intro 5
+  m_EditorClassIdentifier: Assembly-CSharp::Daadab.TextSequenceItem
+  me: {fileID: 11400000}
+  text: Do you need a tutorial on water trucking?
+  yesResponse: {fileID: 11400000, guid: 33b1b1bfd32a459439faeb6f596f36fe, type: 2}
+  noResponse: {fileID: 11400000, guid: 1c79287ed267e814f8ad2bb8166bdaf6, type: 2}
