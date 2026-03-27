@@ -4,6 +4,7 @@ using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 using DG.Tweening;
+using System.Threading.Tasks;
 
 namespace Daadab
 {
@@ -11,6 +12,7 @@ namespace Daadab
     {
         public static TextSequenceRunner Instance;
 
+        [SerializeField] private CanvasGroup aminaCanvasGroup;
         [SerializeField] private TextSequence introTextSequence;
         [SerializeField] private TextSequence outroTextSequence;
         [SerializeField] private TextInstance textInstanceTemplate;
@@ -34,7 +36,10 @@ namespace Daadab
 
         private RectTransform tutorialYesButtonRectTransform;
         private RectTransform tutorialNoButtonRectTransform;
+        private RectTransform aminaRectTransform;
+        private CanvasGroup myCanvasGroup;
 
+        private Registry registry;
         private InputReader inputReader;
         PlayerInputActions inputActions;
 
@@ -49,9 +54,15 @@ namespace Daadab
 
             base.Awake();
 
+            registry = Registry.Instance;
+            Assert.IsNotNull(registry);
+
             Assert.IsNotNull(introTextSequence);
             Assert.IsNotNull(outroTextSequence);
             Assert.IsNotNull(textHolder);
+
+            Assert.IsNotNull(aminaCanvasGroup);
+            aminaRectTransform = aminaCanvasGroup.GetComponent<RectTransform>();
 
             origSpeechHolderPositionY = textHolder.anchoredPosition.y;
 
@@ -66,6 +77,9 @@ namespace Daadab
 
             Assert.IsNotNull(tutorialYesButtonRectTransform);
             Assert.IsNotNull(tutorialNoButtonRectTransform);
+
+            myCanvasGroup = GetComponent<CanvasGroup>();
+            Assert.IsNotNull(myCanvasGroup);
 
             Instance = this;
 
@@ -99,14 +113,18 @@ namespace Daadab
 
             if (inputReader.StartMouseClick()) ShowNextText();
 
-            if (inputReader.StartEscape()) FinishTextSequence();
+            if (inputReader.StartEscape())
+            {
+                // FinishTextSequence();
+                Hide(() => { GameManager.Instance.FinishIntroSequence(); });
+            }
         }
 
         public override void EnterActiveState()
         {
             base.EnterActiveState();
 
-            RunTextSequence();
+            StartTextSequence();
         }
 
         public void SetIntroTextSequence()
@@ -124,11 +142,22 @@ namespace Daadab
             );
         }
 
-        public void RunTextSequence()
+        public async void StartTextSequence()
         {
             Assert.IsNotNull(textSequence.finishSequenceResponse);
 
             Debug.Log($"Run text sequence: {textSequence.name}");
+
+            aminaCanvasGroup.alpha = 0;
+            aminaRectTransform.anchoredPosition = new Vector2(
+                x: -aminaRectTransform.sizeDelta.x,
+                y: aminaRectTransform.anchoredPosition.y
+            );
+
+            aminaCanvasGroup.DOFade(1, registry.MediumTime);
+            aminaRectTransform.DOAnchorPosX(0, registry.MediumTime);
+
+            await Task.Delay(TimeSpan.FromSeconds(registry.LongTime));
 
             textIndex = -1;
 
@@ -153,7 +182,7 @@ namespace Daadab
 
                 if (noResponse == null && yesResponse == null)
                 {
-                    FinishTextSequence();
+                    Hide(FinishTextSequence);
                 }
                 return;
             }
@@ -220,6 +249,14 @@ namespace Daadab
         {
             if (noResponse != null)
                 noResponse.CompleteResponse();
+        }
+
+        private void Hide(Action onComplete)
+        {
+            myCanvasGroup.DOKill();
+
+            myCanvasGroup.DOFade(0, registry.MediumTime).OnComplete(() => { onComplete.Invoke(); });
+            
         }
 
         private void FinishTextSequence()

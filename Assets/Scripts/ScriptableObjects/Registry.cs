@@ -8,13 +8,28 @@ namespace Daadab
     {
         public static Registry Instance;
 
+        private float shortTime = .3f;
+        public float ShortTime => shortTime;
+
+        private float mediumTime = .5f;
+        public float MediumTime => mediumTime;
+
+        private float longTime = .7f;
+        public float LongTime => longTime;
+
+
         /// <summary>
         /// What is the number of water droplets that will be spawned for this mission?
         /// </summary>
         [SerializeField] private uint totalWaterCount;
         public uint TotalWaterCount => totalWaterCount;
 
-        public void SetTotalWaterCount(uint count) => totalWaterCount = count;
+        public void SetTotalWaterCount(uint count)
+        {
+            totalWaterCount = count;
+            
+            Debug.Log($"Set total water count: {totalWaterCount}");
+        }
 
         /// <summary>
         /// Distance between each lane on the x-axis

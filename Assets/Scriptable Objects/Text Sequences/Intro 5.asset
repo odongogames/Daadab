@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Intro 5
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.TextSequenceItem
   me: {fileID: 11400000}
-  text: Do you need a tutorial on water trucking?
-  yesResponse: {fileID: 11400000, guid: 33b1b1bfd32a459439faeb6f596f36fe, type: 2}
-  noResponse: {fileID: 11400000, guid: 1c79287ed267e814f8ad2bb8166bdaf6, type: 2}
+  text: The clock is ticking....^Let's get moving!
+  yesResponse: {fileID: 0}
+  noResponse: {fileID: 0}

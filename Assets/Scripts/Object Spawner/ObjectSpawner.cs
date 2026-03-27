@@ -77,15 +77,13 @@ namespace Daadab
             base.Initialise();
 
             gameplayObjectSequenceList.Clear();
-            
+
             for (int i = 0; i < totalObjectSequenceCount; i++)
             {
                 gameplayObjectSequenceList.Add(sourceObjectSequenceList[UnityEngine.Random.Range(0, sourceObjectSequenceList.Count)]);
             }
-            
-            CountPooledObjectsFromGameplayObjectSequences();
 
-            gameplayObjectCounts.Clear();
+            CountPooledObjectsFromGameplayObjectSequences();
 
             foreach (var count in gameplayObjectCounts)
             {
@@ -98,6 +96,8 @@ namespace Daadab
             finalObject.transform.position = Vector2.zero;
             finalObject.SetActive(false);
             totalSpawnDistance = distanceCalculator.GetPositionAheadOfPlayer(initialSpawnDistance).z;
+
+            Debug.Log("Initialise object spawner");
         }
 
         private void Update()
@@ -174,6 +174,8 @@ namespace Daadab
 
         private void CountPooledObjectsFromGameplayObjectSequences()
         {
+            gameplayObjectCounts.Clear();
+
             foreach (var sequence in gameplayObjectSequenceList)
             {
                 CountPooledObjectsFromTransform(sequence.LeftLaneHolder, gameplayObjectCounts);

@@ -38,8 +38,8 @@ namespace Daadab
             rectTransform = GetComponent<RectTransform>();
 
             pauseCharArray = new char[2];
-            pauseCharArray[0] = ',';
-            pauseCharArray[1] = '.';
+            // pauseCharArray[0] = ',';
+            pauseCharArray[0] = '.';
             pauseCharArray[1] = '!';
         }
 

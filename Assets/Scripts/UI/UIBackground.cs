@@ -9,6 +9,9 @@ namespace Daadab
     {
         public static UIBackground Instance;
 
+        [SerializeField] private CanvasGroup skipInstructions;
+        private Registry registry;
+
         public override void Awake()
         {
             if (Instance != null)
@@ -21,6 +24,11 @@ namespace Daadab
             Instance = this;
 
             base.Awake();
+
+            registry = Registry.Instance;
+            Assert.IsNotNull(registry);
+
+            Assert.IsNotNull(skipInstructions);
 
             GameManager.OnStartIntroConversation += GameManager_OnStartIntroConversation;
             GameManager.OnStartGame += GameManager_OnStartGame;
@@ -36,6 +44,9 @@ namespace Daadab
 
         private void GameManager_OnStartIntroConversation()
         {
+            skipInstructions.alpha = 0;
+            skipInstructions.DOFade(1, registry.MediumTime);
+            
             Show(instantly: true);
         }
 
