@@ -10,6 +10,7 @@ namespace Daadab
         public static GameManager Instance;
         private Health playerHealth;
         private GameStateMachine gameStateMachine;
+        private Registry registry;
 
         public static Action OnResetGame;
         public static Action OnSetupGame;
@@ -25,6 +26,9 @@ namespace Daadab
         
         private float gameTime;
         public float GetGameTime() => gameTime;
+
+        private float timeLeft;
+        public float GetTimeLeft() => timeLeft;
 
         private void Awake()
         {
@@ -45,6 +49,9 @@ namespace Daadab
 
         private void Start()
         {
+            registry = Registry.Instance;
+            Assert.IsNotNull(registry);
+
             gameStateMachine = GameStateMachine.Instance;
             Assert.IsNotNull(gameStateMachine);
 
@@ -79,6 +86,11 @@ namespace Daadab
         private IEnumerator SetupGameCO()
         {
             yield return new WaitForEndOfFrame();
+            
+            Debug.Log("-----------------------");
+            Debug.Log("Setup game");
+
+            timeLeft = registry.TotalGameTime;
 
             OnSetupGame?.Invoke();
 
@@ -100,6 +112,12 @@ namespace Daadab
             if (gameStateMachine.GetCurrentState() == GameState.Gameplay)
             {
                 gameTime += Time.deltaTime;
+                timeLeft -= Time.deltaTime;
+
+                if (timeLeft <= 0)
+                {
+                    GameOver();
+                }
             }
         }
 
@@ -117,8 +135,13 @@ namespace Daadab
         {
             if (value <= 0)
             {
-                gameStateMachine.ChangeGameState(GameState.GameOver);
+                GameOver();
             }
+        }
+
+        private void GameOver()
+        {
+            gameStateMachine.ChangeGameState(GameState.GameOver);
         }
 
         public void RestartGame()

@@ -453,7 +453,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19470a29e65ebd74e8ae8e1447334f42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.TruckInput
-  inputReader: {fileID: 11400000, guid: 2039eca748a727644a7cd14895796de4, type: 2}
 --- !u!114 &2428016283326492519
 MonoBehaviour:
   m_ObjectHideFlags: 0

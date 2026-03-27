@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Intro 5
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.TextSequenceItem
   me: {fileID: 11400000}
-  text: The clock is ticking....^Let's get moving!
+  text: The clock is ticking.^Let's get moving!
   yesResponse: {fileID: 0}
   noResponse: {fileID: 0}

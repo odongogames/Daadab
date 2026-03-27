@@ -8,6 +8,9 @@ namespace Daadab
     {
         public static Registry Instance;
 
+        private float totalGameTime = 60;
+        public float TotalGameTime => totalGameTime; 
+
         private float shortTime = .3f;
         public float ShortTime => shortTime;
 
@@ -27,7 +30,7 @@ namespace Daadab
         public void SetTotalWaterCount(uint count)
         {
             totalWaterCount = count;
-            
+
             Debug.Log($"Set total water count: {totalWaterCount}");
         }
 
