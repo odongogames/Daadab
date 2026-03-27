@@ -7,12 +7,9 @@ namespace Daadab
     public class SpeedBooster : MonoBehaviour, IUnitComponent
     {
         [SerializeField] private uint maxBoostCount = 3;
-        [SerializeField] private float boostDurationShort = 1.5f;
-        [SerializeField] private float boostDurationMedium = 3f;
-        [SerializeField] private float boostDurationLong = 6f;
+        [SerializeField] private float boostDuration = 4;
 
         [Header("Runtime Only")]
-        [SerializeField] private float boostDuration;
         /// <summary>
         /// How many boosts does the player have?
         /// </summary>
@@ -62,41 +59,25 @@ namespace Daadab
             OnAddBoost?.Invoke(boostCount);
         }
 
-        public bool StartBoost()
+        public void StartBoost()
         {
-            if (boostCount <= 0)
-            {
-                Debug.Log("Truck does not have any boosts");
-                return false;
-            }
+            // if (boostCount <= 0)
+            // {
+            //     Debug.Log("Truck does not have any boosts");
+            //     return false;
+            // }
 
-            if (isBoosting)
-            {
-                Debug.Log("Truck is already boosting");
-                return false;
-            }
+            // if (isBoosting)
+            // {
+            //     Debug.Log("Truck is already boosting");
+            //     return false;
+            // }
 
             lastBoostTime = gameManager.GetGameTime();
 
             isBoosting = true;
-
-            if (boostCount == 1)
-            {
-                boostDuration = boostDurationShort;
-            }
-            else if (boostCount == 2)
-            {
-                boostDuration = boostDurationMedium;
-            }
-            else if(boostCount >= 3)
-            {
-                boostDuration = boostDurationLong;
-            }
-
-            boostCount = 0;
+            
             OnStartBoost?.Invoke();
-
-            return true;
         }
 
         private void FinishBoost()

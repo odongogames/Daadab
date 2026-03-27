@@ -4,10 +4,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
 namespace Daadab
 {
     public class WorldCurver : MonoBehaviour
@@ -19,7 +15,7 @@ namespace Daadab
 //         private static float backwardsStrengthStatic;
 // #endif
 
-        private Registry registry;
+        [SerializeField] private Registry registry;
 
         //         private void OnValidate()
         //         {
@@ -31,7 +27,6 @@ namespace Daadab
 
         private void Awake()
         {
-            registry = Registry.Instance;
             Assert.IsNotNull(registry);
         }
 

@@ -7,6 +7,8 @@ namespace Daadab
 {
     public class ObjectSpawner : GameStateSubscriber
     {
+        public static ObjectSpawner Instance;
+
         [SerializeField] private GameObject finalObject;
         [SerializeField] private Transform objectHolder;
         // TODO: Consider moving to registry
@@ -42,6 +44,15 @@ namespace Daadab
 
         public override void Awake()
         {
+            if (Instance != null)
+            {
+                Debug.Log($"Destroying {this.GetType()} as more than one instance found.");
+                Destroy(this);
+                return;
+            }
+
+            Instance = this;
+
             base.Awake();
 
             registry = Registry.Instance;
@@ -72,6 +83,11 @@ namespace Daadab
             }
         }
 
+        public float GetTotalWorldDistance()
+        {
+            return objectSequenceSpawnCount * registry.ObjectSequenceLength + initialSpawnDistance;
+        }
+
         public override void Initialise()
         {
             base.Initialise();
@@ -93,6 +109,8 @@ namespace Daadab
                 }
             }
 
+            objectSequenceSpawnCount = 0;
+
             finalObject.transform.position = Vector2.zero;
             finalObject.SetActive(false);
             totalSpawnDistance = distanceCalculator.GetPositionAheadOfPlayer(initialSpawnDistance).z;
@@ -102,6 +120,8 @@ namespace Daadab
 
         private void Update()
         {
+            if (gameStateMachine.GetCurrentState() != GameState.Gameplay) return;
+
             desiredSpawnDistance = distanceCalculator.GetPositionAheadOfPlayer(spawnAheadDistance).z;
 
             while (!HasFinishedSpawningObjectSequences() && totalSpawnDistance < desiredSpawnDistance)

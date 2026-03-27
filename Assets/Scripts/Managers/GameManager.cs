@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -23,7 +24,7 @@ namespace Daadab
         /// </summary>
         private uint runCount;
         public uint RunCount => runCount;
-        
+
         private float gameTime;
         public float GetGameTime() => gameTime;
 
@@ -40,17 +41,14 @@ namespace Daadab
             }
 
             Instance = this;
-
-#if !UNITY_EDITOR
-            // didable fog while editing to improve visibility
-            RenderSettings.fog = true;
-#endif
         }
 
-        private void Start()
+        private IEnumerator Start()
         {
             registry = Registry.Instance;
             Assert.IsNotNull(registry);
+
+            RenderSettings.fog = registry.UseFog;
 
             gameStateMachine = GameStateMachine.Instance;
             Assert.IsNotNull(gameStateMachine);
@@ -74,6 +72,8 @@ namespace Daadab
 
                 OnStartIntroConversation?.Invoke();
 
+                yield return new WaitForSeconds(1f);
+
                 gameStateMachine.ChangeGameState(GameState.Conversation);
             }
             else
@@ -82,15 +82,18 @@ namespace Daadab
             }
 
         }
-        
+
         private IEnumerator SetupGameCO()
         {
             yield return new WaitForEndOfFrame();
-            
+
             Debug.Log("-----------------------");
             Debug.Log("Setup game");
 
+            // TODO: Find out why registry.TotalGameTime isn't working
             timeLeft = registry.TotalGameTime;
+            
+            Debug.Log($"Game time: {timeLeft}");
 
             OnSetupGame?.Invoke();
 
@@ -116,6 +119,7 @@ namespace Daadab
 
                 if (timeLeft <= 0)
                 {
+                    Debug.Log("Time is up!");
                     GameOver();
                 }
             }
@@ -135,6 +139,7 @@ namespace Daadab
         {
             if (value <= 0)
             {
+                Debug.Log("Player take damage");
                 GameOver();
             }
         }
@@ -161,7 +166,7 @@ namespace Daadab
             StartCoroutine(FinishGameCO());
         }
 
-         private IEnumerator FinishGameCO()
+        private IEnumerator FinishGameCO()
         {
             yield return new WaitForSeconds(1);
 
@@ -169,6 +174,20 @@ namespace Daadab
             Debug.Log("-----------------------");
 
             gameStateMachine.ChangeGameState(GameState.MissionComplete);
+        }
+
+        public void TogglePause()
+        {
+            if (gameStateMachine.GetCurrentState() == GameState.Gameplay)
+            {
+                DOTween.PauseAll();
+                gameStateMachine.ChangeGameState(GameState.Pause);
+            }
+            else if (gameStateMachine.GetCurrentState() == GameState.Pause)
+            {
+                DOTween.PlayAll();
+                gameStateMachine.ChangeGameState(GameState.Gameplay);
+            }
         }
 
     }

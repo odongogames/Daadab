@@ -15,10 +15,14 @@ namespace Daadab
         [SerializeField] private float worldLength;
         [SerializeField] private float playerDistToWorldEnd;
         [SerializeField][Range(0, 1)] private float playerDistToWorldEndNormalised;
+        [SerializeField] private float playerDistToAbsoluteWorldEnd;
+        [SerializeField][Range(0, 1)] private float playerDistToAbsoluteWorldEndNormalised;
 
         public float WorldLength => worldLength;
         public float PlayerDistToWorldEndNormalised => playerDistToWorldEndNormalised;
+        public float PlayerDistToAbsoluteWorldEndNormalised => playerDistToAbsoluteWorldEndNormalised;
 
+        private ObjectSpawner objectSpawner;
         private SectionSpawner sectionSpawner;
 
         public override void Awake()
@@ -52,6 +56,9 @@ namespace Daadab
         {
             sectionSpawner = SectionSpawner.Instance;
             Assert.IsNotNull(sectionSpawner);
+
+            objectSpawner = ObjectSpawner.Instance;
+            Assert.IsNotNull(objectSpawner);
         }
 
         private void Update()
@@ -60,6 +67,12 @@ namespace Daadab
                 sectionSpawner.LastSection.SectionEnd.position.z - playerTransform.position.z;
 
             playerDistToWorldEndNormalised = playerDistToWorldEnd / worldLength;
+
+            // the player starts at z position of 20
+            playerDistToAbsoluteWorldEnd =
+                objectSpawner.GetTotalWorldDistance() - (playerTransform.position.z + 20);
+
+            playerDistToAbsoluteWorldEndNormalised /= objectSpawner.GetTotalWorldDistance();
         }
 
         public Vector3 GetPositionAheadOfPlayer(float forwardDistance)

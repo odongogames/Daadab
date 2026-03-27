@@ -75,6 +75,8 @@ namespace Daadab
         {
             SFXPlayer = SFXPlayer.Instance;
             Assert.IsNotNull(SFXPlayer);
+
+            enabled = false;
         }
 
         private void FixedUpdate()
@@ -139,11 +141,14 @@ namespace Daadab
         public void EnterActiveState()
         {
             enabled = true;
+            Debug.Log("Enable truck");
         }
 
         public void ExitActiveState()
         {
             enabled = false;
+            Debug.Log("Disable truck");
+
         }
 
         public void ResetMe()
@@ -156,31 +161,32 @@ namespace Daadab
 
         public void ReduceSpeed()
         {
-            zSpeed = zSpeedReduced;
+            ChangeZSpeed(zSpeedReduced);
 
             disableLaneSwitching = true;
         }
 
         public void RestoreSpeed()
         {
-            zSpeed = zSpeedOriginal;
+            ChangeZSpeed(zSpeedOriginal);
 
             disableLaneSwitching = false;
         }
 
         public void StartBoost()
         {
-            if (booster.StartBoost())
-            {
-                disableLaneSwitching = false;
+            booster.StartBoost();
 
-                zSpeed = zSpeedBoosted;                
-            }
+            disableLaneSwitching = false;
+
+            ChangeZSpeed(zSpeedBoosted);                
         }
 
-        public void AddBoost()
+        private void ChangeZSpeed(float newSpeed)
         {
-            booster.AddBoost();
+            zSpeed = newSpeed;
+
+            Debug.Log($"Set truck Z speed: {zSpeed}");
         }
 
         public void AddToWaterTank()

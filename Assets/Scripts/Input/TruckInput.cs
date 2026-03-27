@@ -32,10 +32,10 @@ namespace Daadab
                 truck.SetXDirection(1);
             }
 
-            if (inputReader.StartBoost())
-            {
-                truck.StartBoost();
-            }
+            // if (inputReader.StartBoost())
+            // {
+            //     truck.StartBoost();
+            // }
         }
         
         public void EnterActiveState()

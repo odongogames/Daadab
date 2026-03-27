@@ -8,7 +8,7 @@ namespace Daadab
     {
         public static Registry Instance;
 
-        private float totalGameTime = 60;
+        [SerializeField] private float totalGameTime = 60;
         public float TotalGameTime => totalGameTime; 
 
         private float shortTime = .3f;
@@ -43,6 +43,9 @@ namespace Daadab
         [SerializeField] private uint objectSequenceLength = 60;
         public float ObjectSequenceLength => objectSequenceLength;
 
+        [SerializeField] private bool useFog;
+        public bool UseFog => useFog;
+
         [SerializeField] private bool curveWorld;
         public bool CurveWorld => curveWorld;
 
@@ -59,7 +62,7 @@ namespace Daadab
             Initialise();
         }
 
-        private void OEnable()
+        public void Enable()
         {
             Initialise();
         }

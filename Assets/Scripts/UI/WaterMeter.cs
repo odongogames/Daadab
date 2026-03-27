@@ -31,7 +31,7 @@ namespace Daadab
 
         private void Start()
         {
-            registry = RegistryInstance.Instance.Registry;
+            registry = Registry.Instance;
             Assert.IsNotNull(registry);
 
             var truck = Truck.Instance;

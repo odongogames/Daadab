@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: Registry
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.Registry
   me: {fileID: 11400000}
+  totalGameTime: 60
+  totalWaterCount: 129
   laneDistance: 6
   objectSequenceLength: 60
+  useFog: 1
   curveWorld: 1
   sidewaysCurveStrength: 0
   backwardsCurveStrength: -0.0005

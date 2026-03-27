@@ -45,7 +45,7 @@ namespace Daadab
         private void GameManager_OnStartIntroConversation()
         {
             skipInstructions.alpha = 0;
-            skipInstructions.DOFade(1, registry.MediumTime);
+            skipInstructions.DOFade(1, registry.LongTime).SetDelay(3);
             
             Show(instantly: true);
         }

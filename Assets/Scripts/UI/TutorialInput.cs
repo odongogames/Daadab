@@ -19,7 +19,10 @@ namespace Daadab
 
             if (inputReader.Escape()) GameManager.Instance.FinishIntroSequence();
             
-            if(inputReader.Enter()) GameManager.Instance.FinishIntroSequence(); 
+            if (inputReader.StartMouseClick()) GameManager.Instance.FinishIntroSequence();
+
+            
+            if (inputReader.Enter()) GameManager.Instance.FinishIntroSequence(); 
         }
     }
 }

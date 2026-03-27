@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 using DG.Tweening;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace Daadab
 {
@@ -142,26 +143,33 @@ namespace Daadab
             );
         }
 
-        public async void StartTextSequence()
+        private void StartTextSequence()
         {
+            enabled = false;
+
             Assert.IsNotNull(textSequence.finishSequenceResponse);
 
+            Debug.Log($"Start text sequence coroutine");
+
+            StartCoroutine(StartTextSequenceCO());
+        }
+
+        private IEnumerator StartTextSequenceCO()
+        {
             Debug.Log($"Run text sequence: {textSequence.name}");
 
             aminaCanvasGroup.alpha = 0;
+
+            yield return new WaitForSeconds(0.5f);
+
             aminaRectTransform.anchoredPosition = new Vector2(
                 x: -aminaRectTransform.sizeDelta.x,
                 y: aminaRectTransform.anchoredPosition.y
             );
 
             aminaCanvasGroup.DOFade(1, registry.MediumTime);
-            aminaRectTransform.DOAnchorPosX(0, registry.MediumTime);
-
-            await Task.Delay(TimeSpan.FromSeconds(registry.LongTime));
-
-            textIndex = -1;
-
-            ShowNextText();
+            aminaRectTransform.DOAnchorPosX(0, registry.MediumTime)
+                            .OnComplete(() => { enabled = true;  textIndex = -1; ShowNextText(); } );   
         }
 
         public void ShowNextText()
@@ -174,7 +182,7 @@ namespace Daadab
 
             textIndex++;
 
-            Debug.Log($"Show text: {textIndex}");
+            // Debug.Log($"Show text: {textIndex}");
 
             if (textIndex >= textSequence.texts.Length)
             {
@@ -194,7 +202,7 @@ namespace Daadab
 
             var height = substrings.Length * lineHeight + padding * 2;
 
-            Debug.Log($"Add height of {height}");
+            // Debug.Log($"Add height of {height}");
 
             text.Activate(textSequence.texts[textIndex].text, height);
 
