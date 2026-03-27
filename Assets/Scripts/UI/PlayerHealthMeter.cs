@@ -9,15 +9,19 @@ namespace Daadab
     public class PlayerHealthMeter : GameStateSubscriber
     {
         [SerializeField] private float smoothTime = 1f;
-        [SerializeField] private float yOffset = -50;
-        [SerializeField] private float xOffset = -137;
+        [SerializeField] private float yOffset = -0.1f;
+        [SerializeField] private float yOffsetBoosted = -0.3f;
+        [SerializeField] private float xOffset = 0.075f;
 
         [SerializeField] private HeartContainer[] heartContainers;
+
+        private bool isTruckBoosting;
 
         private CanvasGroup canvasGroup;
         private RectTransform rectTransform;
         private Health playerHealth;
         private Transform truckTransform;
+        private Truck truck;
         private Camera mainCamera;
         private Registry registry;
 
@@ -38,7 +42,7 @@ namespace Daadab
             mainCamera = Camera.main;
             Assert.IsNotNull(mainCamera);
 
-            var truck = Truck.Instance;
+            truck = Truck.Instance;
             Assert.IsNotNull(truck);
 
             truckTransform = truck.transform;
@@ -50,6 +54,9 @@ namespace Daadab
             playerHealth.OnAddHealth += Player_OnAddHealth;
 
             GameManager.OnSetupGame += GameManager_OnSetupGame;
+
+            SpeedBooster.OnStartBoost += SpeedBooster_OnStartBoost;
+            SpeedBooster.OnFinishBoost += SpeedBooster_OnFinishBoost;
         }
 
         public override void OnDestroy()
@@ -60,19 +67,25 @@ namespace Daadab
             playerHealth.OnAddHealth -= Player_OnAddHealth;
 
             GameManager.OnSetupGame -= GameManager_OnSetupGame;
+
+            SpeedBooster.OnStartBoost -= SpeedBooster_OnStartBoost;
+            SpeedBooster.OnFinishBoost -= SpeedBooster_OnFinishBoost;
         }
 
         private void LateUpdate()
         {
-            var position = mainCamera.WorldToScreenPoint(truckTransform.position);
-            position.y += yOffset;
-            position.x += xOffset * truckTransform.position.x;
+            var position = mainCamera.WorldToViewportPoint(truckTransform.position);
+            position.y += isTruckBoosting ? yOffsetBoosted : yOffset;
+            position.x += xOffset * (int)truck.Lane;
 
-            rectTransform.anchoredPosition = Vector2.Lerp(
-                a: rectTransform.anchoredPosition,
+            rectTransform.anchorMin = Vector2.Lerp(
+                a: rectTransform.anchorMin,
                 b: position,
                 t: Time.deltaTime * smoothTime
             );
+
+            // rectTransform.anchorMin = position;
+            rectTransform.anchorMax = rectTransform.anchorMin;
         }
 
         private void GameManager_OnSetupGame()
@@ -91,10 +104,20 @@ namespace Daadab
         {
             heartContainers[value].Deactivate();
         }
-        
+
         private void Player_OnAddHealth(uint value)
         {
             heartContainers[value - 1].Activate();
+        }
+
+        private void SpeedBooster_OnFinishBoost()
+        {
+            isTruckBoosting = false;
+        }
+
+        private void SpeedBooster_OnStartBoost()
+        {
+            isTruckBoosting = true;
         }
     }
 }

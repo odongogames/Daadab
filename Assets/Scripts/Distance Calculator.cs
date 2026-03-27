@@ -13,6 +13,7 @@ namespace Daadab
         [Header("Runtime only")]
         [SerializeField] private Transform playerTransform;
         [SerializeField] private float worldLength;
+        [SerializeField] private float totalWorldDistance;
         [SerializeField] private float playerDistToWorldEnd;
         [SerializeField][Range(0, 1)] private float playerDistToWorldEndNormalised;
         [SerializeField] private float playerDistToAbsoluteWorldEnd;
@@ -59,6 +60,8 @@ namespace Daadab
 
             objectSpawner = ObjectSpawner.Instance;
             Assert.IsNotNull(objectSpawner);
+
+            totalWorldDistance = objectSpawner.GetTotalWorldDistance();
         }
 
         private void Update()
@@ -70,7 +73,7 @@ namespace Daadab
 
             // the player starts at z position of 20
             playerDistToAbsoluteWorldEnd =
-                objectSpawner.GetTotalWorldDistance() - (playerTransform.position.z + 20);
+                totalWorldDistance - (playerTransform.position.z + 20);
 
             playerDistToAbsoluteWorldEndNormalised /= objectSpawner.GetTotalWorldDistance();
         }

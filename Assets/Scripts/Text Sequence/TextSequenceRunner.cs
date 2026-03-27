@@ -32,8 +32,10 @@ namespace Daadab
 
         private int textIndex;
 
-        private float lineHeight = 70;
-        private float padding = 100;
+        private float lineHeight = 40;
+        private float padding = 40;
+
+        private TextInstance lastText;
 
         private RectTransform tutorialYesButtonRectTransform;
         private RectTransform tutorialNoButtonRectTransform;
@@ -210,8 +212,15 @@ namespace Daadab
 
             if (textIndex > 0)
             {
-                height += 50;
+                height += 25;
             }
+
+            if (lastText != null)
+            {
+                lastText.DisableArrow();
+            }
+
+            lastText = text;
 
             speechHolderPositionY += height;
 

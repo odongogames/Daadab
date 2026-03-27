@@ -3110,6 +3110,7 @@ MonoBehaviour:
   worldEnd: {fileID: 1834042609}
   playerTransform: {fileID: 0}
   worldLength: 0
+  totalWorldDistance: 0
   playerDistToWorldEnd: 0
   playerDistToWorldEndNormalised: 0
   playerDistToAbsoluteWorldEnd: 0
@@ -3241,7 +3242,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -226, y: 84}
+  m_AnchoredPosition: {x: -140, y: 52}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &1687637726
@@ -3325,13 +3326,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26
-  m_fontSizeBase: 26
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 2
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -9062,6 +9063,14 @@ PrefabInstance:
     - target: {fileID: 61641830872923829, guid: c4931198a68149646a152cb37b2d4e53, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452772280526156839, guid: c4931198a68149646a152cb37b2d4e53, type: 3}
+      propertyPath: xOffset
+      value: 0.075
+      objectReference: {fileID: 0}
+    - target: {fileID: 452772280526156839, guid: c4931198a68149646a152cb37b2d4e53, type: 3}
+      propertyPath: yOffset
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1723997832319078092, guid: c4931198a68149646a152cb37b2d4e53, type: 3}
       propertyPath: m_AnchorMax.y

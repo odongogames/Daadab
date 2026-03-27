@@ -38,7 +38,7 @@ namespace Daadab
         private SFXPlayer SFXPlayer;
         private Registry registry;
 
-
+        public Lane Lane => lane;
         public bool IsBoosting() => booster.IsBoosting();
 
         private void Awake()

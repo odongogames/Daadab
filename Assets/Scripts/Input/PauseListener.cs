@@ -39,8 +39,6 @@ namespace Daadab
 
         private void Update()
         {
-            if (!enabled) return;
-
             if (inputReader.Escape()) gameManager.TogglePause();
         }
     }

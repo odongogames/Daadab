@@ -39,5 +39,7 @@ namespace Daadab
 
             text.UpdateText(str, letterByLetter: true);
         }
+
+        public void DisableArrow() => arrowTransform.gameObject.SetActive(false);
     }
 }

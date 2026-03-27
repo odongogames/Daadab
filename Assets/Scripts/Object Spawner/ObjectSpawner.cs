@@ -85,7 +85,7 @@ namespace Daadab
 
         public float GetTotalWorldDistance()
         {
-            return objectSequenceSpawnCount * registry.ObjectSequenceLength + initialSpawnDistance;
+            return totalObjectSequenceCount * registry.ObjectSequenceLength + initialSpawnDistance;
         }
 
         public override void Initialise()
