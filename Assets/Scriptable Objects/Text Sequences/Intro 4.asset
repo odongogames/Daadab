@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Intro 4
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.TextSequenceItem
   me: {fileID: 11400000}
-  text: We need you to go collect this water^and bring it back to camp.
+  text: We need you to go collect this water^and bring it back to camp
   yesResponse: {fileID: 0}
   noResponse: {fileID: 0}

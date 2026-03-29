@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.TextSequenceItem
   me: {fileID: 11400000}
   text: As we all know, water is life,^and when water is scarce, life is difficult.^Water
-    is vital to the future of Daadab.
+    is vital to the future of Daadab
   yesResponse: {fileID: 0}
   noResponse: {fileID: 0}

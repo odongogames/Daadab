@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Intro 3
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.TextSequenceItem
   me: {fileID: 11400000}
-  text: 'Our regular water truck got stuck in a^sand trap and had to offload all
-    the water^in order to get out. '
+  text: Our regular water truck got stuck in a^sand trap and had to offload all the
+    water^in order to get out
   yesResponse: {fileID: 0}
   noResponse: {fileID: 0}

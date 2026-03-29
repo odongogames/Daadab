@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.TextSequenceItem
   me: {fileID: 11400000}
   text: "Hey there! My name is Amina.^I\u2019m the Water, Sanitation and Hygiene
-    Officer^here at Daadab Refugee Complex."
+    Officer^here at Daadab Refugee Complex"
   yesResponse: {fileID: 0}
   noResponse: {fileID: 0}

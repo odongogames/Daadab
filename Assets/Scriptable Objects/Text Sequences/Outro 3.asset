@@ -15,6 +15,6 @@ MonoBehaviour:
   me: {fileID: 11400000}
   text: While piped systems or boreholes^are better long-term solutions, they often
     fail^during extreme droughts or when populations^(like those in Dadaab) grow
-    faster than^the infrastructure can handle.
+    faster than^the infrastructure can handle
   yesResponse: {fileID: 0}
   noResponse: {fileID: 0}
