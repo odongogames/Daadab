@@ -20,6 +20,8 @@ namespace Daadab
         private float longTime = .7f;
         public float LongTime => longTime;
 
+        [SerializeField] private string daadabURL;
+        public string DaadabURL => daadabURL;
 
         /// <summary>
         /// What is the number of water droplets that will be spawned for this mission?

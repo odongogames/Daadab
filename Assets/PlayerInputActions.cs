@@ -154,6 +154,33 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TouchPosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""7b3cd421-5957-4685-bf1a-3acbd8bf9568"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Touch"",
+                    ""type"": ""Button"",
+                    ""id"": ""0ad1f36d-bfbe-4008-8ce8-e54e9bfa053d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Mouse Position"",
+                    ""type"": ""Value"",
+                    ""id"": ""8399ea9a-078f-4bec-af7f-17324ff165c9"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -354,6 +381,39 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Mouse Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""91c4ee7e-8e3b-4d46-a604-b1f0da6735cc"",
+                    ""path"": ""<Touchscreen>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TouchPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8429ef61-8106-4ae1-9559-880ba97f0da5"",
+                    ""path"": ""<Touchscreen>/Press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Touch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7ee0d782-54df-4ded-a33d-4016c810306a"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mouse Position"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -430,6 +490,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Escape = m_Player.FindAction("Escape", throwIfNotFound: true);
         m_Player_Enter = m_Player.FindAction("Enter", throwIfNotFound: true);
         m_Player_MouseClick = m_Player.FindAction("Mouse Click", throwIfNotFound: true);
+        m_Player_TouchPosition = m_Player.FindAction("TouchPosition", throwIfNotFound: true);
+        m_Player_Touch = m_Player.FindAction("Touch", throwIfNotFound: true);
+        m_Player_MousePosition = m_Player.FindAction("Mouse Position", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -517,6 +580,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Escape;
     private readonly InputAction m_Player_Enter;
     private readonly InputAction m_Player_MouseClick;
+    private readonly InputAction m_Player_TouchPosition;
+    private readonly InputAction m_Player_Touch;
+    private readonly InputAction m_Player_MousePosition;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -556,6 +622,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/MouseClick".
         /// </summary>
         public InputAction @MouseClick => m_Wrapper.m_Player_MouseClick;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/TouchPosition".
+        /// </summary>
+        public InputAction @TouchPosition => m_Wrapper.m_Player_TouchPosition;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Touch".
+        /// </summary>
+        public InputAction @Touch => m_Wrapper.m_Player_Touch;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/MousePosition".
+        /// </summary>
+        public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -603,6 +681,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @MouseClick.started += instance.OnMouseClick;
             @MouseClick.performed += instance.OnMouseClick;
             @MouseClick.canceled += instance.OnMouseClick;
+            @TouchPosition.started += instance.OnTouchPosition;
+            @TouchPosition.performed += instance.OnTouchPosition;
+            @TouchPosition.canceled += instance.OnTouchPosition;
+            @Touch.started += instance.OnTouch;
+            @Touch.performed += instance.OnTouch;
+            @Touch.canceled += instance.OnTouch;
+            @MousePosition.started += instance.OnMousePosition;
+            @MousePosition.performed += instance.OnMousePosition;
+            @MousePosition.canceled += instance.OnMousePosition;
         }
 
         /// <summary>
@@ -635,6 +722,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @MouseClick.started -= instance.OnMouseClick;
             @MouseClick.performed -= instance.OnMouseClick;
             @MouseClick.canceled -= instance.OnMouseClick;
+            @TouchPosition.started -= instance.OnTouchPosition;
+            @TouchPosition.performed -= instance.OnTouchPosition;
+            @TouchPosition.canceled -= instance.OnTouchPosition;
+            @Touch.started -= instance.OnTouch;
+            @Touch.performed -= instance.OnTouch;
+            @Touch.canceled -= instance.OnTouch;
+            @MousePosition.started -= instance.OnMousePosition;
+            @MousePosition.performed -= instance.OnMousePosition;
+            @MousePosition.canceled -= instance.OnMousePosition;
         }
 
         /// <summary>
@@ -789,5 +885,26 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMouseClick(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "TouchPosition" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTouchPosition(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Touch" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTouch(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Mouse Position" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMousePosition(InputAction.CallbackContext context);
     }
 }

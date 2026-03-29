@@ -510,7 +510,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.SpeedBooster
   maxBoostCount: 3
-  boostDuration: 4
+  boostDuration: 5
   boostCount: 0
 --- !u!114 &1466759059465036539
 MonoBehaviour:

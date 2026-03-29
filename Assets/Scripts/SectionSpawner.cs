@@ -16,7 +16,7 @@ namespace Daadab
         [SerializeField] private float spawnedDistance;
         [SerializeField] private uint sectionSpawnCounter;
         [SerializeField] private Transform sectionHolder;
-        [SerializeField] private Section sectionTemplate;
+        [SerializeField] private Section[] sectionTemplates;
         /// <summary>
         /// How many sections need to be instantiated
         /// </summary>
@@ -61,16 +61,23 @@ namespace Daadab
             distanceCalculator = DistanceCalculator.Instance;
             Assert.IsNotNull(distanceCalculator);
 
-            Assert.IsNotNull(sectionTemplate);
+            Assert.IsTrue(sectionTemplates.Length > 0);
             Assert.IsNotNull(sectionHolder);
 
-            for (int i = 0; i < sectionAmount; i++)
-            {
-                var obj = Instantiate(sectionTemplate, sectionHolder);
-                obj.name = $"Section {i + 1}";
-                obj.gameObject.SetActive(false);
+            uint counter = 0;
 
-                sections.Add(obj);
+            foreach (var section in sectionTemplates)
+            {
+                for (int i = 0; i < sectionAmount; i++)
+                {
+                    var obj = Instantiate(section, sectionHolder);
+                    obj.name = $"Section {counter + 1}";
+                    obj.gameObject.SetActive(false);
+
+                    counter++;
+
+                    sections.Add(obj);
+                }
             }
 
             Assert.IsTrue(sectionCreateDistanceNormalised > 0);

@@ -75,7 +75,8 @@ namespace Daadab
             playerDistToAbsoluteWorldEnd =
                 totalWorldDistance - (playerTransform.position.z + 20);
 
-            playerDistToAbsoluteWorldEndNormalised /= objectSpawner.GetTotalWorldDistance();
+            playerDistToAbsoluteWorldEndNormalised =
+                playerDistToAbsoluteWorldEnd / objectSpawner.GetTotalWorldDistance();
         }
 
         public Vector3 GetPositionAheadOfPlayer(float forwardDistance)

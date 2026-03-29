@@ -23,7 +23,7 @@ namespace Daadab
 
         private void Update()
         {
-            slider.value = distanceCalculator.PlayerDistToAbsoluteWorldEndNormalised;
+            slider.value = 1 - distanceCalculator.PlayerDistToAbsoluteWorldEndNormalised;
         }
     }
 }

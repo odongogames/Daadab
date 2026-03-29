@@ -31,6 +31,7 @@ namespace Daadab
             Assert.IsNotNull(skipInstructions);
 
             GameManager.OnStartIntroConversation += GameManager_OnStartIntroConversation;
+            MissionCompleteManager.OnStartOutroConversation += MissionCompleteManager_OnStartOutroConversation;
             GameManager.OnStartGame += GameManager_OnStartGame;
         }
 
@@ -39,10 +40,21 @@ namespace Daadab
             base.OnDestroy();
 
             GameManager.OnStartIntroConversation -= GameManager_OnStartIntroConversation;
+            MissionCompleteManager.OnStartOutroConversation -= MissionCompleteManager_OnStartOutroConversation;
             GameManager.OnStartGame -= GameManager_OnStartGame;
         }
 
+        private void MissionCompleteManager_OnStartOutroConversation()
+        {
+            ShowMe();
+        }
+
         private void GameManager_OnStartIntroConversation()
+        {
+            ShowMe();
+        }
+
+        private void ShowMe()
         {
             skipInstructions.alpha = 0;
             skipInstructions.DOFade(1, registry.LongTime).SetDelay(3);

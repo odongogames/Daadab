@@ -90,6 +90,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.UIScreen
   activeGameState: 0
+  initialised: 0
+  firstButton: {fileID: 0}
+  showInstantly: 0
+  hideInstantly: 0
 --- !u!225 &4279478662964412610
 CanvasGroup:
   m_ObjectHideFlags: 0

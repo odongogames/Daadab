@@ -12,14 +12,18 @@ namespace Daadab
 
         [SerializeField] private AudioClips clickSound;
         [SerializeField] private AudioClips collectSound;
+        [SerializeField] private AudioClips gravelSound;
+        [SerializeField] private AudioClips pingSound;
         [SerializeField] private AudioClips powerupSound;
+
+        [SerializeField] private AudioSource audioSource;
 
         private float volume = 1;
         private Camera mainCamera;
         private Transform mainCameraTransform;
 
         private void Awake()
-        {   
+        {
             if (Instance != null)
             {
                 Debug.Log($"Destroying {this.GetType()} as more than one instance found.");
@@ -31,7 +35,11 @@ namespace Daadab
 
             Assert.IsNotNull(clickSound);
             Assert.IsNotNull(collectSound);
+            Assert.IsNotNull(gravelSound);
+            Assert.IsNotNull(pingSound);
             Assert.IsNotNull(powerupSound);
+
+            Assert.IsNotNull(audioSource);
 
             mainCamera = Camera.main;
             // mainCameraTransform = Camera.main.transform;
@@ -39,13 +47,13 @@ namespace Daadab
 
         public void PlayClickSound() => PlayClip(clickSound);
         public void PlayCollectSound() => PlayClip(collectSound);
-        public void PlayerPowerupSound() => PlayClip(powerupSound);
+        public void PlayPingSound() => PlayClip(pingSound);
+        public void PlayPowerupSound() => PlayClip(powerupSound);
 
         public void PlayClip(AudioClips clips)
         {
             PlaySound(clips, Vector3.zero);
         }
-
 
         private void PlaySound(AudioClip clip, Vector3 position, float volumeMultiplier = 1f)
         {
@@ -65,6 +73,24 @@ namespace Daadab
             // Debug.Log("Play: " + clip.name);
 
             PlaySound(clip, position, volume);
+        }
+
+        public void StartPlayingGravelSound()
+        {
+            StartPlayingSound(gravelSound);
+        }
+
+        public void StartPlayingSound(AudioClips clips)
+        {
+            var clip = clips.clips[UnityEngine.Random.Range(0, clips.clips.Length)];
+
+            audioSource.clip = clip;
+            audioSource.Play();
+        }
+
+        public void StopPlayingSound()
+        {
+            audioSource.Pause();
         }
     }
 }

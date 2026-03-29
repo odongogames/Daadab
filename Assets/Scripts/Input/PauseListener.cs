@@ -39,7 +39,7 @@ namespace Daadab
 
         private void Update()
         {
-            if (inputReader.Escape()) gameManager.TogglePause();
+            if (inputReader.StartEscape()) gameManager.TogglePause();
         }
     }
 }

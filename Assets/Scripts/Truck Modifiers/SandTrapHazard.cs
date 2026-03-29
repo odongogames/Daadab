@@ -14,6 +14,8 @@ namespace Daadab
             }
 
             truck.ReduceSpeed();
+            
+            SFXPlayer.Instance.StartPlayingGravelSound();
         }
 
         public override void ExitTrigger(Truck truck)
@@ -23,10 +25,12 @@ namespace Daadab
                 Debug.Log($"{name} cannot modify truck it's boosting");
                 return;
             }
-            
+
             base.ExitTrigger(truck);
 
             truck.RestoreSpeed();
+
+            SFXPlayer.Instance.StopPlayingSound();
         }
     }
 }

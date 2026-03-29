@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.Registry
   me: {fileID: 11400000}
   totalGameTime: 60
-  totalWaterCount: 129
+  daadabURL: https://www.unhcr.org/ke/about-us/where-we-work/dadaab-refugee-complex
+  totalWaterCount: 127
   laneDistance: 6
   objectSequenceLength: 60
   useFog: 1
-  curveWorld: 1
+  curveWorld: 0
   sidewaysCurveStrength: 0
   backwardsCurveStrength: -0.0005

@@ -9,6 +9,10 @@ namespace Daadab
     {
         public static InputReader Instance;
 
+        // public bool StartTouch() => inputActions.Player.Touch.IsPressed();
+        public Vector2 TouchPosition() => inputActions.Player.TouchPosition.ReadValue<Vector2>();
+        public bool Touch() => inputActions.Player.Touch.WasPressedThisFrame();
+
         public bool StartMovingLeft() => inputActions.Player.MoveLeft.WasPressedThisFrame();
         public bool MoveLeft() => inputActions.Player.MoveLeft.IsPressed();
 
@@ -29,6 +33,8 @@ namespace Daadab
 
         public bool StartMouseClick() => inputActions.Player.MouseClick.WasPressedThisFrame();
         public bool MouseClick() => inputActions.Player.MouseClick.IsPressed();
+
+        public Vector2 MousePosition() => inputActions.Player.MousePosition.ReadValue<Vector2>();
 
         PlayerInputActions inputActions;
 

@@ -68,6 +68,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "TouchPosition",
+                    "type": "Value",
+                    "id": "7b3cd421-5957-4685-bf1a-3acbd8bf9568",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Touch",
+                    "type": "Button",
+                    "id": "0ad1f36d-bfbe-4008-8ce8-e54e9bfa053d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Mouse Position",
+                    "type": "Value",
+                    "id": "8399ea9a-078f-4bec-af7f-17324ff165c9",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -266,6 +293,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Mouse Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "91c4ee7e-8e3b-4d46-a604-b1f0da6735cc",
+                    "path": "<Touchscreen>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TouchPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8429ef61-8106-4ae1-9559-880ba97f0da5",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Touch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7ee0d782-54df-4ded-a33d-4016c810306a",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Mouse Position",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

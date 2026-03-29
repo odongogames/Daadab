@@ -14,13 +14,18 @@ namespace Daadab
         [SerializeField] private CanvasGroup statsCanvasGroup;
         [SerializeField] private TextMeshProUGUI waterMeterText;
         [SerializeField] private Image waterMeterImage;
+        [SerializeField] private Button continueButton;
 
         private RectTransform statsCanvasRectTransform;
+        private RectTransform continueButtonRectTransform;
 
         private Registry registry;
         private WaterTank waterTank;
+        private SFXPlayer SFXPlayer;
 
         private float waterAmount;
+
+        public static Action OnStartOutroConversation;
 
         public override void Awake()
         {
@@ -30,6 +35,10 @@ namespace Daadab
             Assert.IsNotNull(statsCanvasGroup);
             Assert.IsNotNull(waterMeterText);
             Assert.IsNotNull(waterMeterImage);
+            Assert.IsNotNull(continueButton);
+
+            continueButtonRectTransform = continueButton.GetComponent<RectTransform>();
+            Assert.IsNotNull(continueButtonRectTransform);
 
             statsCanvasRectTransform = statsCanvasGroup.GetComponent<RectTransform>();
             Assert.IsNotNull(statsCanvasRectTransform);
@@ -38,6 +47,9 @@ namespace Daadab
 
             var truck = Truck.Instance;
             Assert.IsNotNull(truck);
+
+            SFXPlayer = SFXPlayer.Instance;
+            Assert.IsNotNull(SFXPlayer);
 
             waterTank = truck.GetComponent<WaterTank>();
             Assert.IsNotNull(waterTank);
@@ -69,6 +81,7 @@ namespace Daadab
 
             statsCanvasGroup.gameObject.SetActive(true);
             bannerText.gameObject.SetActive(true);
+            continueButton.gameObject.SetActive(false);
 
             bannerText.rectTransform.DOScale(1.25f, .5f).OnComplete(() => { ReduceBannerTextSize(); });
         }
@@ -115,12 +128,33 @@ namespace Daadab
 
                 AnimateWaterMeter();
 
+                if (Time.frameCount % 15 == 0) SFXPlayer.PlayPingSound();
+
                 if (waterAmount == waterTank.GetWaterAmount())
                 {
                     done = true;
                 }
                 yield return null;
             }
+
+            continueButtonRectTransform.localScale = Vector2.zero;
+            continueButton.gameObject.SetActive(true);
+
+            continueButtonRectTransform.DOScale(1.3f, 1).SetDelay(0.5f);
+            continueButtonRectTransform.DOScale(1, .3f).SetDelay(1.5f);
+
+            continueButton.onClick.AddListener(() => { StartCoroutine(StartOutroConversationCO()); });
+        }
+
+        private IEnumerator StartOutroConversationCO()
+        {
+            TextSequenceRunner.Instance.SetOutroTextSequence();
+
+            yield return new WaitForSeconds(1f);
+
+            gameStateMachine.ChangeGameState(GameState.Conversation);
+
+            OnStartOutroConversation?.Invoke();
         }
     }
 }

@@ -1,12 +1,17 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace Daadab
 {
     [RequireComponent(typeof(CanvasGroup))]
     public class UIScreen : GameStateSubscriber
     {
+        /// <summary>
+        /// This button will be selected when UI screen is opened
+        /// </summary>
+        [SerializeField] private Button firstButton;
         [SerializeField] private bool showInstantly;
         [SerializeField] private bool hideInstantly;
 
@@ -40,7 +45,13 @@ namespace Daadab
             Hide();
         }
 
-        protected void Show(bool instantly = false)
+        private void OnApplicationFocus(bool focus)
+        {
+            if(firstButton)
+                firstButton.Select();            
+        }
+
+        public void Show(bool instantly = false)
         {
             rectTransform.anchoredPosition = Vector2.zero;
 
@@ -53,6 +64,9 @@ namespace Daadab
 
             canvasGroup.interactable = true;
             canvasGroup.blocksRaycasts = true;
+
+            if (firstButton)
+                firstButton.Select();
         }
 
         protected void Hide(bool instantly = false)

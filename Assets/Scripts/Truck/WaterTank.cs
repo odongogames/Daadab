@@ -15,7 +15,7 @@ namespace Daadab
         public void AddToWaterTank()
         {
             waterTank++;
-            Debug.Log($"Add to watertank: {waterTank}");
+            // Debug.Log($"Add to watertank: {waterTank}");
             OnAddToWaterTank?.Invoke(waterTank);
         }
 

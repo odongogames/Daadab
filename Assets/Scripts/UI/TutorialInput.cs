@@ -17,12 +17,16 @@ namespace Daadab
         {
             if (!enabled) return;
 
-            if (inputReader.Escape()) GameManager.Instance.FinishIntroSequence();
+            if (inputReader.StartEscape()) GameManager.Instance.FinishIntroSequence();
             
             if (inputReader.StartMouseClick()) GameManager.Instance.FinishIntroSequence();
+            else if (inputReader.Touch()) GameManager.Instance.FinishIntroSequence();
 
-            
-            if (inputReader.Enter()) GameManager.Instance.FinishIntroSequence(); 
+            if (inputReader.StartEnter()) GameManager.Instance.FinishIntroSequence(); 
+
+            if (inputReader.MoveLeft()) GameManager.Instance.FinishIntroSequence(); 
+
+            if (inputReader.MoveRight()) GameManager.Instance.FinishIntroSequence(); 
         }
     }
 }

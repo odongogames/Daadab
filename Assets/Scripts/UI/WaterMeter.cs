@@ -47,7 +47,8 @@ namespace Daadab
 
         private void OnDestroy()
         {
-            waterTank.OnAddToWaterTank -= Truck_OnAddToWaterTank;
+            if(waterTank)
+                waterTank.OnAddToWaterTank -= Truck_OnAddToWaterTank;
 
             GameManager.OnStartGame -= GameManager_OnStartGame;
         }

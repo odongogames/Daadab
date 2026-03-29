@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Daadab
@@ -5,11 +6,15 @@ namespace Daadab
     [CreateAssetMenu(menuName = "Pickups/Speed Boost")]
     public class SpeedBoostPickup : AbstractTruckModifier
     {
+        public static Action OnPickupBoost;
+
         public override void ModifyTruck(Truck truck)
         {
             base.ModifyTruck(truck);
 
             truck.StartBoost();
+
+            OnPickupBoost?.Invoke();
         }
 
         // public override void FinishModifyingTruck(Truck truck)

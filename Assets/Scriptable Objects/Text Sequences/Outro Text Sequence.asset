@@ -15,6 +15,8 @@ MonoBehaviour:
   me: {fileID: 11400000}
   texts:
   - {fileID: 11400000, guid: 2fb42fd52b295ab40ab2aecc78b66145, type: 2}
-  - {fileID: 11400000, guid: 8657b21ff9af9e94c825a9c4d1462eae, type: 2}
   - {fileID: 11400000, guid: e9a8b99b1c3070e43bde61d8e59e447e, type: 2}
+  - {fileID: 11400000, guid: 8657b21ff9af9e94c825a9c4d1462eae, type: 2}
+  - {fileID: 11400000, guid: 87480c9c55ec6e94796aec6def806c51, type: 2}
+  - {fileID: 11400000, guid: 7f3998044c1c66e47a7b7b91c9ef5b45, type: 2}
   finishSequenceResponse: {fileID: 11400000, guid: 1776c25c27d187441a1f4ce3e49bae18, type: 2}

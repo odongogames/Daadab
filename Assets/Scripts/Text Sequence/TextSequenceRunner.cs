@@ -6,6 +6,7 @@ using UnityEngine.InputSystem.Utilities;
 using DG.Tweening;
 using System.Threading.Tasks;
 using System.Collections;
+using UnityEngine.UI;
 
 namespace Daadab
 {
@@ -18,8 +19,8 @@ namespace Daadab
         [SerializeField] private TextSequence outroTextSequence;
         [SerializeField] private TextInstance textInstanceTemplate;
         [SerializeField] private RectTransform textHolder;
-        [SerializeField] private GameObject tutorialYesButton;
-        [SerializeField] private GameObject tutorialNoButton;
+        [SerializeField] private Button tutorialYesButton;
+        [SerializeField] private Button tutorialNoButton;
 
 
         [Header("Runtime Only")]
@@ -72,8 +73,8 @@ namespace Daadab
             Assert.IsNotNull(tutorialYesButton);
             Assert.IsNotNull(tutorialNoButton);
 
-            tutorialNoButton.SetActive(false);
-            tutorialYesButton.SetActive(false);
+            tutorialNoButton.gameObject.SetActive(false);
+            tutorialYesButton.gameObject.SetActive(false);
 
             tutorialYesButtonRectTransform = tutorialYesButton.GetComponent<RectTransform>();
             tutorialNoButtonRectTransform = tutorialNoButton.GetComponent<RectTransform>();
@@ -112,9 +113,14 @@ namespace Daadab
         {
             if (!enabled) return;
 
-            if (inputReader.StartEnter()) ShowNextText();
+            if (yesResponse == null && noResponse == null)
+            {
+                if (inputReader.StartMouseClick()) ShowNextText();
+                else if (inputReader.Touch()) ShowNextText();
 
-            if (inputReader.StartMouseClick()) ShowNextText();
+                if (inputReader.StartEnter()) ShowNextText();
+
+            }
 
             if (inputReader.StartEscape())
             {
@@ -135,6 +141,13 @@ namespace Daadab
             textSequence = introTextSequence;
             ResetTextHolderPosition();
         }
+        
+        public void SetOutroTextSequence()
+        {
+            textSequence = outroTextSequence;
+            ResetTextHolderPosition();
+        }
+
 
         private void ResetTextHolderPosition()
         {
@@ -152,6 +165,11 @@ namespace Daadab
             Assert.IsNotNull(textSequence.finishSequenceResponse);
 
             Debug.Log($"Start text sequence coroutine");
+
+            for (int i = textHolder.childCount - 1; i > -1; i--)
+            {
+                GameObject.Destroy(textHolder.GetChild(i).gameObject);
+            }
 
             StartCoroutine(StartTextSequenceCO());
         }
@@ -235,22 +253,24 @@ namespace Daadab
 
             if (yesResponse != null && noResponse != null)
             {
-                tutorialNoButtonRectTransform.localScale = Vector2.zero;
-                tutorialYesButtonRectTransform.localScale = Vector2.zero;
+                // tutorialNoButtonRectTransform.localScale = Vector2.zero;
+                // tutorialYesButtonRectTransform.localScale = Vector2.zero;
 
-                tutorialNoButton.SetActive(true);
-                tutorialYesButton.SetActive(true);
+                tutorialNoButton.gameObject.SetActive(true);
+                tutorialYesButton.gameObject.SetActive(true);
 
-                tutorialNoButtonRectTransform.DOKill();
-                tutorialYesButtonRectTransform.DOKill();
+                // tutorialNoButtonRectTransform.DOKill();
+                // tutorialYesButtonRectTransform.DOKill();
 
-                tutorialNoButtonRectTransform.DOScale(1, .5f).SetDelay(.5f);
-                tutorialYesButtonRectTransform.DOScale(1, .5f).SetDelay(.5f);
+                // tutorialNoButtonRectTransform.DOScale(1, .5f).SetDelay(.5f);
+                // tutorialYesButtonRectTransform.DOScale(1, .5f).SetDelay(.5f);
+
+                tutorialYesButton.Select();
             }
             else
             {
-                tutorialNoButton.SetActive(false);
-                tutorialYesButton.SetActive(false);
+                tutorialNoButton.gameObject.SetActive(false);
+                tutorialYesButton.gameObject.SetActive(false);
             }
 
             text.gameObject.SetActive(true);
@@ -276,8 +296,15 @@ namespace Daadab
             
         }
 
-        private void FinishTextSequence()
+        public void FinishTextSequence()
         {
+            StartCoroutine(FinishTextSequenceCO());
+        }
+
+        private IEnumerator FinishTextSequenceCO()
+        {
+            yield return new WaitForEndOfFrame();
+
             textSequence.finishSequenceResponse.CompleteResponse();
         }
     }

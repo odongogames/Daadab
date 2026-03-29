@@ -28,6 +28,9 @@ namespace Daadab
         [SerializeField] private List<PooledObjectSequence> sourceObjectSequenceList= new();
         [SerializeField] private List<PooledObjectSequence> gameplayObjectSequenceList = new();
 
+        [SerializeField] private int extraObjectCount = 4;
+        [SerializeField] private PooledObject[] extraObjectsToSpawn;
+
         [Header("Runtime Only")]
         [SerializeField] private PooledObjectSequence currentObjectSequence;
         [SerializeField] private List<PooledObjectCount> objectCounts = new();
@@ -80,6 +83,11 @@ namespace Daadab
             {
                 // var poolAmount = Mathf.CeilToInt(count.Count / objectCounts.Count);
                 objectPool.AddPool(count.PooledObject, (int)count.Count);
+            }
+
+            foreach (var obj in extraObjectsToSpawn)
+            {
+                objectPool.AddPool(obj, extraObjectCount);
             }
         }
 
@@ -178,6 +186,8 @@ namespace Daadab
                 obj.Transform.localPosition = position;
 
                 obj.Transform.localRotation = child.localRotation;
+                obj.SpawnMe?.Invoke();
+
                 obj.GameObject.SetActive(true);
             }
         }

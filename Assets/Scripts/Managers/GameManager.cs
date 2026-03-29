@@ -31,6 +31,8 @@ namespace Daadab
         private float timeLeft;
         public float GetTimeLeft() => timeLeft;
 
+        private bool playerHasFinishedGame;
+
         private void Awake()
         {
             if (Instance != null)
@@ -62,7 +64,8 @@ namespace Daadab
             playerHealth.OnTakeDamage += Player_OnTakeDamage;
 
             runCount++;
-
+            playerHasFinishedGame = false;
+            
             Debug.Log("-----------------------");
             Debug.Log($"Init game. Run count: {runCount}");
 
@@ -112,7 +115,7 @@ namespace Daadab
 
         private void Update()
         {
-            if (gameStateMachine.GetCurrentState() == GameState.Gameplay)
+            if (!playerHasFinishedGame && gameStateMachine.GetCurrentState() == GameState.Gameplay)
             {
                 gameTime += Time.deltaTime;
                 timeLeft -= Time.deltaTime;
@@ -132,7 +135,8 @@ namespace Daadab
 
         private void OnDestroy()
         {
-            playerHealth.OnTakeDamage -= Player_OnTakeDamage;
+            if(playerHealth)
+                playerHealth.OnTakeDamage -= Player_OnTakeDamage;
         }
 
         private void Player_OnTakeDamage(uint value)
@@ -161,6 +165,8 @@ namespace Daadab
         public void FinishGame()
         {
             Debug.Log("Player has finished game");
+
+            playerHasFinishedGame = true;
             OnFinishGame?.Invoke();
 
             StartCoroutine(FinishGameCO());
@@ -168,7 +174,7 @@ namespace Daadab
 
         private IEnumerator FinishGameCO()
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(2);
 
             Debug.Log("Mission complete");
             Debug.Log("-----------------------");

@@ -119,6 +119,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2772925569783199237, guid: 3eef5b45458df5e4d8daffb2df2a8aec, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4705763186151864524}
+    - targetCorrespondingSourceObject: {fileID: 2772925569783199237, guid: 3eef5b45458df5e4d8daffb2df2a8aec, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1753435173396783549}
   m_SourcePrefab: {fileID: 100100000, guid: 3eef5b45458df5e4d8daffb2df2a8aec, type: 3}
 --- !u!1 &6373566922827718802 stripped
 GameObject:
@@ -137,3 +140,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8939edf000997cf48a3d8c74e7f6fa95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Daadab.TutorialNoButton
+--- !u!114 &1753435173396783549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6373566922827718802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventTrigger
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4705763186151864524}
+          m_TargetAssemblyTypeName: Daadab.TextSequenceNoButton, Assembly-CSharp
+          m_MethodName: OnClick
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2

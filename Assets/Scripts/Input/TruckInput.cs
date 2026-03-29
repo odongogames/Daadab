@@ -32,6 +32,33 @@ namespace Daadab
                 truck.SetXDirection(1);
             }
 
+            if (inputReader.Touch())
+            {
+                var touchPosition = inputReader.TouchPosition();
+
+                if (touchPosition.x < Screen.width / 2)
+                {
+                    truck.SetXDirection(-1);
+                }
+                else
+                {
+                    truck.SetXDirection(1);
+                }
+            }
+            else if (inputReader.StartMouseClick())
+            {
+                var mousePosition = inputReader.MousePosition();
+
+                if (mousePosition.x < Screen.width / 2)
+                {
+                    truck.SetXDirection(-1);
+                }
+                else
+                {
+                    truck.SetXDirection(1);
+                }
+            }
+
             // if (inputReader.StartBoost())
             // {
             //     truck.StartBoost();

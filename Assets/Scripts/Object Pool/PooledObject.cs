@@ -6,18 +6,18 @@ namespace Daadab
 {
     public class PooledObject : MonoBehaviour
     {
-        [SerializeField] private PooledObjectData data;
-
+        [SerializeField] private bool clearAtEndOfBoost;
         private float clearDistanceAroundPlayerAtEndOfBoost = 20;
 
         private ObjectPool pool;
-        private Transform originalParent;
         private Transform myTransform;
         private Transform playerTransform;
         private GameObject myGameObject;
 
         public ObjectPool Pool { get => pool; set => pool = value; }
-        public PooledObjectData GetData() => data;
+
+        public Action SpawnMe;
+
         public Transform Transform
         {
             get
@@ -46,8 +46,6 @@ namespace Daadab
         private void Awake()
         {
             myTransform = transform;
-
-            originalParent = myTransform.parent;
 
             GameManager.OnResetGame += GameManager_OnResetGame;
             SpeedBooster.OnFinishBoost += SpeedBooster_OnFinishBoost;
@@ -84,6 +82,8 @@ namespace Daadab
             {
                 return;
             }
+
+            if (!clearAtEndOfBoost) return;
             
             float distanceToPlayer =
                 Vector3.Distance(playerTransform.position, myTransform.position);
@@ -97,8 +97,6 @@ namespace Daadab
         public void Release()
         {
             pool.ReturnToPool(this);
-
-            // myTransform.SetParent(originalParent, worldPositionStays: false);
         }
         
         private void OnTriggerEnter(Collider other)

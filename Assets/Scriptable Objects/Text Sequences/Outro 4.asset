@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f82b1a29f4e1c34ba07c74f5b02d0fa, type: 3}
+  m_Name: Outro 4
+  m_EditorClassIdentifier: Assembly-CSharp::Daadab.TextSequenceItem
+  me: {fileID: 11400000}
+  text: Would you like to learn more about^the current situation in Daadab?
+  yesResponse: {fileID: 11400000, guid: c38e0836ebd774a4293661afda0016b3, type: 2}
+  noResponse: {fileID: 11400000, guid: b43803bd3d11dff4ea168471047c1084, type: 2}
